@@ -84,7 +84,6 @@
 
 <script>
 /* ===== 1.  Встроенное расписание ===== */
-/*  ВСТАВЬТЕ сюда объект, полученный во второй вкладке.  */
 const schedule = {
     "27 июля": {
         "Day off:": [
@@ -189,7 +188,7 @@ content.addEventListener('touchend', e => {
     const endX = e.changedTouches[0].clientX;
     const diff = endX - startX;
     if (Math.abs(diff) > 50) {
-        const current = tab1Btn.classList.contains('active') ? 0 : 1;
+        const current = tab1Btn.classList.contains('active')? 0 : 1;
         const next = diff > 0 ? 0 : 1;
         if (next !== current) switchTab(next);
     }
@@ -287,14 +286,14 @@ function displaySchedule() {
 }
 
 function findDancer(name) {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
+    const date = Object.keys(schedule)[0]; // 获取日期
+    const shows = schedule[date]; // 获取当天的所有演出
 
     const result = Object.keys(shows).filter(showName =>
         shows[showName].includes(name)
     );
 
-    document.getElementById('dateDisplay').textContent = `Расписание на день для "${name}"`;
+    document.getElementById('dateDisplay').textContent = `Расписание на ${date} для ${name}`; // 修改显示内容
     document.getElementById('dateDisplay').style.display = 'block';
 
     const ul = document.getElementById('scheduleListUl');
