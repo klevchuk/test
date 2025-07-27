@@ -294,7 +294,7 @@ function findDancer(name) {
         shows[showName].includes(name)
     );
 
-    document.getElementById('dateDisplay').textContent = date;
+    document.getElementById('dateDisplay').textContent = `Расписание на день для "${name}"`;
     document.getElementById('dateDisplay').style.display = 'block';
 
     const ul = document.getElementById('scheduleListUl');
