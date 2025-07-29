@@ -77,6 +77,7 @@
 "></textarea>
         <input type="password" id="password" placeholder="Пароль">
         <button onclick="generateCode()">обработать</button>
+        <button onclick="copyToClipboard()">копировать</button>
         <div id="saveMsg" style="display:none"></div>
         <pre id="generatedCode" style="display:none;margin-top:8px"></pre>
     </div>
@@ -84,85 +85,84 @@
 
 <script>
 /* ===== 1.  Встроенное расписание ===== */
+
 const schedule = {
-    "27 июля": {
+    "30 июля": {
         "Day off:": [
-            "Yulian",
-            "Datri"
-        ],
-        "11:00 Chimelong hotel ❗️10:30 машинка от общаги": [
-            "Lemon",
-            "Andrey",
-            "Dasha",
-            "Diana",
-            "Avrora"
-        ],
-        "12:10 Сафари отель свинг: ❗️Машинка в 11:30 с общаги": [
-            "Katya",
-            "Masha",
-            "Miya",
-            "Anton",
             "Ilya",
-            "Sergey"
-        ],
-        "❗️ 13:45 Model (4D come at 13:40)": [
-            "Yaroslav",
-            "Lemon",
-            "Diana",
-            "Dasha",
-            "Avrora",
             "Sofiia"
         ],
-        "❗️14:30 Katyusha (magic theater come at 14:25)": [
-            "Ilya",
-            "Andrey",
-            "Diana",
-            "Katya"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45": [
-            "Dragon:",
-            "Yaroslav",
-            "Lemon",
+        "11:00 Chimelong hotel ❗️10:30 машинка от общаги": [
+            "Yulian",
             "Anton",
-            "Anya",
-            "Masha",
-            "Lera"
-        ],
-        "❗️16:15 Model (4D come at 16:10)": [
-            "Yaroslav",
-            "Andrey",
             "Diana",
-            "Miya",
-            "Avrora",
-            "Dasha"
-        ],
-        "❗️17:00 mini parade (magic theater come at 16:55)": [
-            "Andrey",
-            "Lemon",
-            "Ilya",
-            "Anton",
-            "Lera",
-            "Katya",
             "Masha",
             "Miya"
         ],
+        "❗️12:30 Katyusha  (magic theater come at 12:25)": [
+            "Yulian",
+            "Anton",
+            "Diana",
+            "Masha"
+        ],
+        "❗️13:45 mini parade (magic theater come at 13:40)": [
+            "Yaroslav",
+            "Lemon",
+            "Andrey",
+            "Dasha",
+            "Diana",
+            "Miya"
+        ],
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
+            "Lemon",
+            "Yulian",
+            "Anton",
+            "Katya",
+            "Masha",
+            "Lera"
+        ],
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
+            "Dasha",
+            "Anya"
+        ],
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Bull car": [
+            "Yaroslav",
+            "Andrey"
+        ],
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion": [
+            "Vera"
+        ],
+        "❗️16:15 Model (4D come at 16:10)": [
+            "Yulian",
+            "Andrey",
+            "Katya",
+            "Miya",
+            "Masha",
+            "Avrora"
+        ],
+        "❗️17:00 mini parade (magic theater come at 16:55)": [
+            "Yaroslav",
+            "Yulian",
+            "Anton",
+            "Miya",
+            "Dasha",
+            "Avrora"
+        ],
         "❗️17:45 Party (come at 17:40)": [
             "Yaroslav",
-            "Ilya",
+            "Anton",
             "Lemon",
             "Anya",
-            "Sofiia",
+            "Katya",
             "Lera"
         ],
         "❗️19:00 Evening parade (come at 18:30)": [
-            "Rhinoceros:",
-            "Ilya",
+            "Yaroslav",
+            "Lemon",
             "Andrey",
-            "Anton",
             "Anya",
-            "Sofiia",
+            "Avrora",
             "Lera",
-            "Scorpion:",
             "Vera"
         ]
     }
@@ -181,18 +181,6 @@ function switchTab(n){
 }
 tab1Btn.onclick = () => switchTab(0);
 tab2Btn.onclick = () => switchTab(1);
-
-let startX = 0;
-content.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-content.addEventListener('touchend', e => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = endX - startX;
-    if (Math.abs(diff) > 50) {
-        const current = tab1Btn.classList.contains('active')? 0 : 1;
-        const next = diff > 0 ? 0 : 1;
-        if (next !== current) switchTab(next);
-    }
-});
 
 /* ===== 3.  Генерация кода ===== */
 function generateCode() {
@@ -252,6 +240,24 @@ function generateCode() {
     msg.style.display = 'block';
 }
 
+function copyToClipboard() {
+    const generatedCode = document.getElementById('generatedCode');
+    if (generatedCode.style.display === 'none') {
+        return;
+    }
+    const code = generatedCode.textContent;
+    navigator.clipboard.writeText(code)
+        .then(() => {
+            const saveMsg = document.getElementById('saveMsg');
+            saveMsg.textContent = 'Скопировано!';
+            saveMsg.className = 'success';
+            saveMsg.style.display = 'block';
+            setTimeout(() => {
+                saveMsg.style.display = 'none';
+            }, 2000);
+        });
+}
+
 /* ===== 4.  Отображение полного расписания и поиск танцора ===== */
 function displaySchedule() {
     const dateDisplay = document.getElementById('dateDisplay');
@@ -286,14 +292,14 @@ function displaySchedule() {
 }
 
 function findDancer(name) {
-    const date = Object.keys(schedule)[0]; // 获取日期
-    const shows = schedule[date]; // 获取当天的所有演出
+    const date = Object.keys(schedule)[0];
+    const shows = schedule[date];
 
     const result = Object.keys(shows).filter(showName =>
         shows[showName].includes(name)
     );
 
-    document.getElementById('dateDisplay').textContent = `Расписание на ${date} для ${name}`; // 修改显示内容
+    document.getElementById('dateDisplay').textContent = `${date}         ${name}`;
     document.getElementById('dateDisplay').style.display = 'block';
 
     const ul = document.getElementById('scheduleListUl');
