@@ -11,7 +11,7 @@
             --accent:#9575cd;
             --text:#4a148c;
             --light:#fff;
-            --save-color: #ff9800; /* Новый оттенок для кнопки сохранить */
+            --copy-color: #4caf50; /* Новый оттенок для кнопки копировать */
         }
         *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
         html,body{height:100%}
@@ -32,7 +32,7 @@
         input[type=password],input[type=text]{width:100%;padding:8px;margin-bottom:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
         button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
         button:active{background:#7e57c2}
-        button.save-btn{background:var(--save-color)} /* Стиль для кнопки сохранить */
+        button.copy-btn{background:var(--copy-color)} /* Стиль для кнопки копировать */
 
         .date-display{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
         .dancer-list{background:#f3e5f5;border:1px solid #d1c4e9;border-radius:5px;padding:10px;margin-top:10px}
@@ -79,8 +79,7 @@
 "></textarea>
         <input type="password" id="password" placeholder="Пароль">
         <button onclick="generateCode()">обработать</button>
-        <button onclick="copyToClipboard()">копировать</button>
-        <button class="save-btn" onclick="saveSchedule()">сохранить</button>
+        <button class="copy-btn" onclick="copyToClipboard()">копировать</button>
         <div id="saveMsg" style="display:none"></div>
         <pre id="generatedCode" style="display:none;margin-top:8px"></pre>
     </div>
@@ -178,28 +177,25 @@ const tab2Btn  = document.getElementById('tab2Btn');
 const pages    = content.children;
 
 function switchTab(n){
-    [tab1Btn, tab2Btn].forEach((btn, i)    => btn.classList.toggle('active', i === n));
+    [tab1Btn, tab2Btn].forEach((btn, i) => btn.classList.toggle('active', i === n));
     pages[0].style.transform = n === 0 ? 'translateX(0)' : 'translateX(-100%)';
-    pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
+       pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
 }
 tab1Btn.onclick = () => switchTab(0);
 tab2Btn.onclick = () => switchTab(1);
 
 // Добавляем обработчик для смахивания
-let startX, startY;
+let startX;
 
 document.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
 });
 
 document.addEventListener('touchend', (e) => {
     const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
     const deltaX = startX - endX;
-    const deltaY = startY - endY;
 
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+    if (Math.abs(deltaX) > 50) {
         if (deltaX > 0) {
             // Смахивание влево
             switchTab(1);
