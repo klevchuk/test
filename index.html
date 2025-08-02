@@ -158,7 +158,7 @@ const schedule = {
             "Avrora",
             "Lera"
         ],
-            "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
     "Lemon",
     "Yaroslav",
     "Andrey",
@@ -399,8 +399,10 @@ function findDancer(name) {
     document.getElementById('dateDisplay').textContent = `${date}         ${name}`;
     document.getElementById('dateDisplay').style.display = 'block';
 
-const ul = document.getElementById('scheduleListUl');
-ul.innerHTML = '';
+    const ul = document.getElementById('scheduleListUl');
+    ul.innerHTML = '';
+    if (result.length === 0) {
+        ul.innerHTML = '';
 if (result.length === 0) {
     ul.innerHTML = '<li>Не найдено</li>';
 } else {
@@ -426,7 +428,7 @@ backButtonContainer.appendChild(backButton);
 
 /* ===== 5.  Инициализация ===== */
 window.onload = () => {
-displaySchedule();
+    displaySchedule();
 };
 </script>
 </body>
