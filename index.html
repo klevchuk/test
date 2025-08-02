@@ -43,11 +43,11 @@
             background: rgba(255, 255, 255, 0.8); /* Более светлый фон */
             border: 1px solid rgba(0, 0, 0, 0.1); /* Добавляем тонкую границу */
             border-radius: 10px; /* Более округлые углы */
-            padding: 6px 12px; /* Добавляем больше внутреннего отступа */
-            font-size: 14px; /* Уменьшаем размер шрифта */
+            padding: 4px 8px; /* Уменьшаем внутренний отступ */
+            font-size: 12px; /* Уменьшаем размер шрифта */
             cursor: pointer;
             text-align: center; /* Центрируем текст */
-            margin: 0 10px; /* Добавляем больше отступов между кнопками */
+            margin: 0 5px; /* Уменьшаем отступы между кнопками */
             text-decoration: none;
             color: var(--text);
             transition: background 0.3s, border 0.3s;
@@ -338,15 +338,15 @@ function displaySchedule() {
         const ul = document.createElement('ul');
         ul.style.display = 'flex'; // Сделаем имена в строку
         ul.style.flexWrap = 'wrap'; // Разрешим перенос на новую строку, если нужно
-        ul.style.gap = '10px'; // Добавляем отступы между кнопками
-        ul.style.marginTop = '10px'; // Добавляем отступ сверху
-        ul.style.marginBottom = '10px'; // Добавляем отступ снизу
+        ul.style.gap = '5px'; // Уменьшаем отступы между кнопками
+        ul.style.marginTop = '5px'; // Уменьшаем отступ сверху
+        ul.style.marginBottom = '5px'; // Уменьшаем отступ снизу
 
         const showNameDiv = document.createElement('div');
         showNameDiv.textContent = showName;
         showNameDiv.style.fontWeight = 'bold';
-        showNameDiv.style.fontSize = '18px';
-        showNameDiv.style.marginBottom = '5px';
+        showNameDiv.style.fontSize = '14px'; // Уменьшаем размер шрифта
+        showNameDiv.style.marginBottom = '5px'; // Уменьшаем отступ снизу
 
         shows[showName].forEach(dancer => {
             const dancerLi = document.createElement('li');
@@ -366,8 +366,8 @@ function displaySchedule() {
         showContainer.appendChild(ul);
         showContainer.style.border = '1px solid #d1c4e9';
         showContainer.style.borderRadius = '5px';
-        showContainer.style.padding = '10px';
-        showContainer.style.marginBottom = '15px';
+        showContainer.style.padding = '5px'; // Уменьшаем внутренний отступ
+        showContainer.style.marginBottom = '10px'; // Уменьшаем отступ снизу
 
         scheduleListUl.appendChild(showContainer);
     });
@@ -400,43 +400,7 @@ function findDancer(name) {
     if (result.length === 0) {
         ul.innerHTML = '<li>Не найдено</li>';
     } else {
-        result.forEach(showName => {
-            const li = document.createElement('li');
-            li.textContent = showName;
-            ul.appendChild(li);
-        });
-    }
-
-    // Очистить контейнер кнопки "начальная страница"
-    const backButtonContainer = document.getElementById('backButtonContainer');
-    backButtonContainer.innerHTML = '';
-
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
-}
-
-function findDancer(name) {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-
-    const result = Object.keys(shows).filter(showName =>
-        shows[showName].includes(name)
-    );
-
-    document.getElementById('dateDisplay').textContent = `${date}         ${name}`;
-    document.getElementById('dateDisplay').style.display = 'block';
-
-    const ul = document.getElementById('scheduleListUl');
-    ul.innerHTML = '';
-    if (result.length === 0) {
-        ul.innerHTML = '<li>Не найдено</li>';
-    } else {
-        result.forEach(showName => {
+        result.forEach(show.forEach(showName => {
             const li = document.createElement('li');
             li.textContent = showName;
             ul.appendChild(li);
