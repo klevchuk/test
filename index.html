@@ -159,7 +159,7 @@ const schedule = {
             "Sofiia",
             "Datri"
         ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
             "Miya",
             "Avrora"
         ],
@@ -167,7 +167,7 @@ const schedule = {
             "Lemon",
             "Andrey"
         ],
-         "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion:": [
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion:": [
             "Vera"
         ],
         "❗️16:15 Model (4D come at 16:10)": [
@@ -337,6 +337,8 @@ function displaySchedule() {
         const ul = document.createElement('ul');
         ul.style.display = 'flex'; // Сделаем имена в строку
         ul.style.flexWrap = 'wrap'; // Разрешим перенос на новую строку, если нужно
+        ul.style.gap = '10px'; // Добавляем отступы между кнопками
+
         shows[showName].forEach(dancer => {
             const dancerLi = document.createElement('li');
 
