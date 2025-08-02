@@ -47,7 +47,7 @@
             font-size: 16px;
             cursor: pointer;
             text-align: left;
-            width: 100%;
+            margin: 0 5px; /* Добавляем отступы между кнопками */
             text-decoration: none;
             color: var(--text);
             transition: background 0.3s;
@@ -167,7 +167,7 @@ const schedule = {
             "Lemon",
             "Andrey"
         ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion:": [
+         "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion:": [
             "Vera"
         ],
         "❗️16:15 Model (4D come at 16:10)": [
@@ -335,6 +335,8 @@ function displaySchedule() {
         li.textContent = showName;
 
         const ul = document.createElement('ul');
+        ul.style.display = 'flex'; // Сделаем имена в строку
+        ul.style.flexWrap = 'wrap'; // Разрешим перенос на новую строку, если нужно
         shows[showName].forEach(dancer => {
             const dancerLi = document.createElement('li');
 
