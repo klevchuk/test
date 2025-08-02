@@ -43,6 +43,27 @@
         .dancer-list li a:hover{text-decoration:underline}
         .error,.success{margin-top:8px;font-size:14px}
         pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
+
+        /* Стиль для контейнера кнопки "начальная страница" */
+        .back-button-container {
+            background: var(--primary);
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .back-button-container button {
+            background: var(--light);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .back-button-container button:hover {
+            background: #e0f2f1;
+        }
     </style>
 </head>
 <body>
@@ -63,6 +84,8 @@
             <h3>Расписание на день:</h3>
             <ul id="scheduleListUl"></ul>
         </div>
+        <!-- Контейнер для кнопки "начальная страница" -->
+        <div class="back-button-container" id="backButtonContainer"></div>
     </div>
 
     <!-- Вкладка 2: редактирование -->
@@ -160,10 +183,7 @@ function generateCode() {
         msg.style.display = 'block';
         out.style.display = 'none';
         return;
-    }
-
-    /* парсим в объект */
-    const lines = raw.split(/\r?\n/);
+       const lines = raw.split(/\r?\n/);
     let date = '', i = 0;
     if (lines.length) date = lines[i++].trim();
 
@@ -187,7 +207,6 @@ function generateCode() {
     }
     const obj = { [date]: shows };
 
-    /* красивый вывод */
     const code = `const schedule = ${JSON.stringify(obj, null, 4)};`;
     out.textContent = code;
     out.style.display = 'block';
@@ -219,6 +238,7 @@ function copyToClipboard() {
 function displaySchedule() {
     const dateDisplay = document.getElementById('dateDisplay');
     const scheduleListUl = document.getElementById('scheduleListUl');
+    const backButtonContainer = document.getElementById('backButtonContainer');
 
     const date = Object.keys(schedule)[0];
     const shows = schedule[date];
@@ -246,6 +266,17 @@ function displaySchedule() {
         li.appendChild(ul);
         scheduleListUl.appendChild(li);
     });
+
+    // Очистить контейнер кнопки "начальная страница"
+    backButtonContainer.innerHTML = '';
+
+    // Добавляем кнопку "начальная страница" в контейнер
+    const backButton = document.createElement('button');
+    backButton.textContent = 'начальная страница';
+    backButton.onclick = () => {
+        displaySchedule(); // Вернуться к общему расписанию
+    };
+    backButtonContainer.appendChild(backButton);
 }
 
 function findDancer(name) {
@@ -271,13 +302,17 @@ function findDancer(name) {
         });
     }
 
-    // Добавляем кнопку "начальная страница"
+    // Очистить контейнер кнопки "начальная страница"
+    const backButtonContainer = document.getElementById('backButtonContainer');
+    backButtonContainer.innerHTML = '';
+
+    // Добавляем кнопку "начальная страница" в контейнер
     const backButton = document.createElement('button');
     backButton.textContent = 'начальная страница';
     backButton.onclick = () => {
         displaySchedule(); // Вернуться к общему расписанию
     };
-    ul.appendChild(backButton);
+    backButtonContainer.appendChild(backButton);
 }
 
 /* ===== 5.  Инициализация ===== */
