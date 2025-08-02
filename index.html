@@ -11,7 +11,7 @@
             --accent:#9575cd;
             --text:#4a148c;
             --light:#fff;
-            --copy-color: #4caf50; /* Новый оттенок для кнопки копировать */
+            --copy-color: #4caf50;
         }
         *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
         html,body{height:100%}
@@ -32,7 +32,7 @@
         input[type=password],input[type=text]{width:100%;padding:8px;margin-bottom:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
         button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
         button:active{background:#7e57c2}
-        button.copy-btn{background:var(--copy-color)} /* Стиль для кнопки копировать */
+        button.copy-btn{background:var(--copy-color)}
 
         .date-display{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
         .dancer-list{background:#f3e5f5;border:1px solid #d1c4e9;border-radius:5px;padding:10px;margin-top:10px}
@@ -40,33 +40,32 @@
         .dancer-list ul{list-style:none}
         .dancer-list li{padding:4px 0;border-bottom:1px solid #e0e0e0}
         .dancer-list li button {
-            background: rgba(255, 255, 255, 0.8); /* Более светлый фон */
-            border: 1px solid rgba(0, 0, 0, 0.1); /* Добавляем тонкую границу */
-            border-radius: 10px; /* Более округлые углы */
-            padding: 6px 12px; /* Увеличиваем внутренний отступ */
-            font-size: 14px; /* Увеличиваем размер шрифта */
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 6px 12px;
+            font-size: 14px;
             cursor: pointer;
-            text-align: center; /* Центрируем текст */
-            margin: 0 5px; /* Уменьшаем отступы между кнопками */
+            text-align: center;
+            margin: 0 5px;
             text-decoration: none;
             color: var(--text);
             transition: background 0.3s, border 0.3s;
         }
         .dancer-list li button:hover {
-            background: rgba(255, 255, 255, 1); /* Более яркий фон при наведении */
-            border: 1px solid rgba(0, 0, 0, 0.2); /* Изменяем границу при наведении */
+            background: rgba(255, 255, 255, 1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
         .dancer-list li button span {
-            font-size: 16px; /* Увеличить размер шрифта */
-            display: block; /* Чтобы текст занимал всю кнопку */
-            text-align: center; /* Центрировать текст */
+            font-size: 16px;
+            display: block;
+            text-align: center;
         }
         .error,.success{margin-top:8px;font-size:14px}
         pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
 
-        /* Стиль для контейнера кнопки "начальная страница" */
         .back-button-container {
-            background: transparent; /* Изменено на прозрачный фон */
+            background: transparent;
             padding: 10px;
             text-align: center;
             border-radius: 5px;
@@ -90,25 +89,21 @@
 <h3 style="color: red; position: fixed; top: 0; right: 0; margin: 0;">beta</h3>
 <header>Расписание шоу</header>
 
-<!-- кнопки-вкладки -->
 <div class="tabs">
     <button class="tab active" id="tab1Btn">Полное расписание</button>
     <button class="tab" id="tab2Btn">Редактировать</button>
 </div>
 
 <div class="content" id="content">
-    <!-- Вкладка 1: полное расписание -->
     <div class="tab-content" id="scheduleDisplay">
         <div id="dateDisplay" class="date-display"></div>
         <div id="scheduleList" class="dancer-list">
             <h3>Расписание на день:</h3>
             <ul id="scheduleListUl"></ul>
         </div>
-        <!-- Контейнер для кнопки "начальная страница" -->
         <div class="back-button-container" id="backButtonContainer"></div>
     </div>
 
-    <!-- Вкладка 2: редактирование -->
     <div class="tab-content" id="schedule">
         <textarea id="scheduleText" placeholder="дата: число и месяц
 
@@ -159,68 +154,67 @@ const schedule = {
             "Lera"
         ],
         "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
-"Lemon",
-"Yaroslav",
-"Andrey",
-"Diana",
-"Katya",
-"Dasha"
-],
-"❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
-    "Anya",
-    "Lera"
-],
-"❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Bull car": [
-    "Ilya",
-    "Anton"
-],
-"❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion": [
-    "Vera"
-],
-"❗️16:15 Model (4D come at 16:10)": [
-    "Yaroslav",
-    "Lemon",
-    "Diana",
-    "Miya",
-    "Masha",
-    "Sofiia"
-],
-"❗️17:00 mini parade (magic theater come at 16:55)": [
-    "Yaroslav",
-    "Ilya",
-    "Andrey",
-    "Diana",
-    "Masha",
-    "Lera"
-],
-"❗️17:45 Party (come at 17:40)": [
-    "Yaroslav",
-    "Ilya",
-    "Andrey",
-    "Katya",
-    "Miya",
-    "Sofiia"
-],
-"❗️19:00 Evening parade (come at 18:30)": [
-    "Rhinoceros:",
-    "Yaroslav",
-    "Ilya",
-    "Andrey",
-    "Katya",
-    "Masha",
-    "Sofiia",
-    "Scorpion:",
-    "Vera"
-]
+            "Lemon",
+            "Yaroslav",
+            "Andrey",
+            "Diana",
+            "Katya",
+            "Dasha"
+        ],
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
+            "Anya",
+            "Lera"
+        ],
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Bull car": [
+            "Ilya",
+            "Anton"
+        ],
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion": [
+            "Vera"
+        ],
+        "❗️16:15 Model (4D come at 16:10)": [
+            "Yaroslav",
+            "Lemon",
+            "Diana",
+            "Miya",
+            "Masha",
+            "Sofiia"
+        ],
+        "❗️17:00 mini parade (magic theater come at 16:55)": [
+            "Yaroslav",
+            "Ilya",
+            "Andrey",
+            "Diana"
+        ],
+        "❗️17:45 Party (come at 17:40)": [
+            "Yaroslav",
+            "Ilya",
+            "Andrey",
+            "Katya",
+            "Miya",
+            "Sofiia"
+        ],
+        "❗️19:00 Evening parade (come at 18:30)": [
+            "Rhinoceros:",
+            "Yaroslav",
+            "Ilya",
+            "Andrey",
+            "Katya",
+            "Masha",
+            "Sofiia",
+            "Scorpion:",
+            "Vera"
+        ]
+    }
 };
 
 /* ===== 2.  Переключение вкладок ===== */
-const content  = document.getElementById('content');
-const tab1Btn  = document.getElementById('tab1Btn');
-const tab2Btn  = document.getElementById('tab2Btn');
-const pages    = content.children;
+const content = document.getElementById('content');
+const tab1Btn = document.getElementById('tab1Btn');
+const tab2Btn = document.getElementById('tab2Btn');
+const pages = content.children;
 
-function switchTab(n){
+function switchTab(n) {
     [tab1Btn, tab2Btn].forEach((btn, i) => btn.classList.toggle('active', i === n));
     pages[0].style.transform = n === 0 ? 'translateX(0)' : 'translateX(-100%)';
     pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
@@ -309,6 +303,7 @@ function generateCode() {
 function copyToClipboard() {
     const generatedCode = document.getElementById('generatedCode');
     if (generatedCode.style.display === 'none') {
+        alert('Сначала сгенерируйте код!');
         return;
     }
     const code = generatedCode.textContent;
@@ -317,6 +312,16 @@ function copyToClipboard() {
             const saveMsg = document.getElementById('saveMsg');
             saveMsg.textContent = 'Скопировано!';
             saveMsg.className = 'success';
+            saveMsg.style.display = 'block';
+            setTimeout(() => {
+                saveMsg.style.display = 'none';
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Не удалось скопировать:', err);
+            const saveMsg = document.getElementById('saveMsg');
+            saveMsg.textContent = 'Не удалось скопировать';
+            saveMsg.className = 'error';
             saveMsg.style.display = 'block';
             setTimeout(() => {
                 saveMsg.style.display = 'none';
@@ -336,22 +341,29 @@ function displaySchedule() {
     dateDisplay.textContent = date;
     scheduleListUl.innerHTML = '';
 
+    if (Object.keys(shows).length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'Расписание пусто';
+        scheduleListUl.appendChild(li);
+        return;
+    }
+
     Object.keys(shows).forEach(showName => {
         const li = document.createElement('li');
         li.textContent = showName;
 
         const ul = document.createElement('ul');
-        ul.style.display = 'flex'; // Сделаем имена в строку
-        ul.style.flexWrap = 'wrap'; // Разрешим перенос на новую строку, если нужно
-        ul.style.gap = '5px'; // Уменьшаем отступы между кнопками
-        ul.style.marginTop = '5px'; // Уменьшаем отступ сверху
-        ul.style.marginBottom = '5px'; // Уменьшаем отступ снизу
+        ul.style.display = 'flex';
+        ul.style.flexWrap = 'wrap';
+        ul.style.gap = '5px';
+        ul.style.marginTop = '5px';
+        ul.style.marginBottom = '5px';
 
         const showNameDiv = document.createElement('div');
         showNameDiv.textContent = showName;
         showNameDiv.style.fontWeight = 'bold';
-        showNameDiv.style.fontSize = '14px'; // Уменьшаем размер шрифта
-        showNameDiv.style.marginBottom = '5px'; // Уменьшаем отступ снизу
+        showNameDiv.style.fontSize = '14px';
+        showNameDiv.style.marginBottom = '5px';
 
         shows[showName].forEach(dancer => {
             const dancerLi = document.createElement('li');
@@ -371,8 +383,8 @@ function displaySchedule() {
         showContainer.appendChild(ul);
         showContainer.style.border = '1px solid #d1c4e9';
         showContainer.style.borderRadius = '5px';
-        showContainer.style.padding = '5px'; // Уменьшаем внутренний отступ
-        showContainer.style.marginBottom = '10px'; // Уменьшаем отступ снизу
+        showContainer.style.padding = '5px';
+        showContainer.style.marginBottom = '10px';
 
         scheduleListUl.appendChild(showContainer);
     });
@@ -400,26 +412,28 @@ function findDancer(name) {
     const ul = document.getElementById('scheduleListUl');
     ul.innerHTML = '';
     if (result.length === 0) {
-        ul.innerHTML = '<li>Не найдено</li>';
+        const li = document.createElement('li');
+        li.textContent = 'Не найдено';
+        ul.appendChild(li);
     } else {
         result.forEach(showName => {
             const li = document.createElement('li');
-li.textContent = showName;
-ul.appendChild(li);
-});
-}
+            li.textContent = showName;
+            ul.appendChild(li);
+        });
+    }
 
-// Очистить контейнер кнопки "начальная страница"
-const backButtonContainer = document.getElementById('backButtonContainer');
-backButtonContainer.innerHTML = '';
+    // Очистить контейнер кнопки "начальная страница"
+    const backButtonContainer = document.getElementById('backButtonContainer');
+    backButtonContainer.innerHTML = '';
 
-// Добавляем кнопку "начальная страница" в контейнер
-const backButton = document.createElement('button');
-backButton.textContent = 'начальная страница';
-backButton.onclick = () => {
-    displaySchedule(); // Вернуться к общему расписанию
-};
-backButtonContainer.appendChild(backButton);
+    // Добавляем кнопку "начальная страница" в контейнер
+    const backButton = document.createElement('button');
+    backButton.textContent = 'начальная страница';
+    backButton.onclick = () => {
+        displaySchedule(); // Вернуться к общему расписанию
+    };
+    backButtonContainer.appendChild(backButton);
 }
 
 /* ===== 5.  Инициализация ===== */
