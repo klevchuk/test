@@ -400,7 +400,7 @@ function findDancer(name) {
     if (result.length === 0) {
         ul.innerHTML = '<li>Не найдено</li>';
     } else {
-        result.forEach(show.forEach(showName => {
+        result.forEach(showName => {
             const li = document.createElement('li');
             li.textContent = showName;
             ul.appendChild(li);
