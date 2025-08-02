@@ -40,20 +40,21 @@
         .dancer-list ul{list-style:none}
         .dancer-list li{padding:4px 0;border-bottom:1px solid #e0e0e0}
         .dancer-list li button {
-            background: rgba(255, 255, 255, 0.7); /* Полупрозрачный фон */
-            border: none;
-            border-radius: 5px;
-            padding: 4px 8px;
-            font-size: 16px;
+            background: rgba(255, 255, 255, 0.8); /* Более светлый фон */
+            border: 1px solid rgba(0, 0, 0, 0.1); /* Добавляем тонкую границу */
+            border-radius: 10px; /* Более округлые углы */
+            padding: 6px 12px; /* Добавляем больше внутреннего отступа */
+            font-size: 14px; /* Уменьшаем размер шрифта */
             cursor: pointer;
-            text-align: left;
-            margin: 0 5px; /* Добавляем отступы между кнопками */
+            text-align: center; /* Центрируем текст */
+            margin: 0 10px; /* Добавляем больше отступов между кнопками */
             text-decoration: none;
             color: var(--text);
-            transition: background 0.3s;
+            transition: background 0.3s, border 0.3s;
         }
         .dancer-list li button:hover {
-            background: rgba(255, 255, 255, 0.9); /* Более прозрачный фон при наведении */
+            background: rgba(255, 255, 255, 1); /* Более яркий фон при наведении */
+            border: 1px solid rgba(0, 0, 0, 0.2); /* Изменяем границу при наведении */
         }
         .error,.success{margin-top:8px;font-size:14px}
         pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
@@ -159,7 +160,7 @@ const schedule = {
             "Sofiia",
             "Datri"
         ],
-                "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
+        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
             "Miya",
             "Avrora"
         ],
