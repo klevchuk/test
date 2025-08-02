@@ -56,6 +56,11 @@
             background: rgba(255, 255, 255, 1); /* Более яркий фон при наведении */
             border: 1px solid rgba(0, 0, 0, 0.2); /* Изменяем границу при наведении */
         }
+        .dancer-list li button span {
+            font-size: 16px; /* Увеличить размер шрифта */
+            display: block; /* Чтобы текст занимал всю кнопку */
+            text-align: center; /* Центрировать текст */
+        }
         .error,.success{margin-top:8px;font-size:14px}
         pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
 
@@ -127,88 +132,87 @@
 /* ===== 1.  Встроенное расписание ===== */
 
 const schedule = {
-    "2 августа": {
-        "Day off": [
-            "Lera"
+    "3 августа": {
+        "Day off:": [
+            "Yulian",
+            "Datri"
         ],
-        "❗️11:00 Chimelong hotel ❗️10:30 машинка от общаги": [
-            "Ilya",
-            "Andrey",
-            "Katya",
-            "Sofiia",
-            "Diana"
+        "11:00 Chimelong hotel ❗️10:30 машинка от общаги": [
+            "Lemon",
+            "Anton",
+            "Anya",
+            "Avrora",
+            "Dasha"
         ],
         "❗️12:30 Katyusha  (magic theater come at 12:25)": [
-            "Ilya",
-            "Andrey",
-            "Katya",
-            "Diana"
+            "Lemon",
+            "Anton",
+            "Anya",
+            "Avrora"
         ],
         "❗️❗️13:45 mini parade (magic theater come at 13:40)": [
             "Lemon",
-            "Ilya",
-            "Anton",
-            "Diana",
-            "Katya",
-            "Datri"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
-            "Ilya",
-            "Yaroslav",
-            "Yulian",
-            "Masha",
-            "Sofiia",
-            "Datri"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
-            "Miya",
-            "Avrora"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Bull car": [
-            "Lemon",
-            "Andrey"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion:": [
-            "Vera"
-        ],
-        "❗️16:15 Model (4D come at 16:10)": [
-            "Yulian",
             "Andrey",
-            "Anya",
-            "Dasha",
-            "Masha",
-            "Avrora"
-        ],
-        "❗️17:00 mini parade (magic theater come at 16:55)": [
-            "Yaroslav",
-            "Yulian",
             "Anton",
-            "Datri",
-            "Anya",
-            "Miya"
-        ],
-        "❗️17:45 Party (come at 17:40)": [
-            "Yaroslav",
-            "Anton",
-            "Lemon",
-            "Dasha",
-            "Masha",
-            "Avrora"
-        ],
-        "❗️19:00 Evening parade (come at 18:30)": [
-            "Rhinoceros:",
-            "Lemon",
-            "Yulian",
-            "Anton",
-            "Anya",
-            "Dasha",
             "Miya",
-            "Scorpion:",
-            "Vera"
-        ]
-    }
+            "Avrora",
+            "Lera"
+        ],
+            "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
+    "Lemon",
+    "Yaroslav",
+    "Andrey",
+    "Diana",
+    "Katya",
+    "Dasha"
+],
+"❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
+    "Anya",
+    "Lera"
+],
+"❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Bull car": [
+    "Ilya",
+    "Anton"
+],
+"❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion": [
+    "Vera"
+],
+"❗️16:15 Model (4D come at 16:10)": [
+    "Yaroslav",
+    "Lemon",
+    "Diana",
+    "Miya",
+    "Masha",
+    "Sofiia"
+],
+"❗️17:00 mini parade (magic theater come at 16:55)": [
+    "Yaroslav",
+    "Ilya",
+    "Andrey",
+    "Diana",
+    "Masha",
+    "Lera"
+],
+"❗️17:45 Party (come at 17:40)": [
+    "Yaroslav",
+    "Ilya",
+    "Andrey",
+    "Katya",
+    "Miya",
+    "Sofiia"
+],
+"❗️19:00 Evening parade (come at 18:30)": [
+    "Rhinoceros:",
+    "Yaroslav",
+    "Ilya",
+    "Andrey",
+    "Katya",
+    "Masha",
+    "Sofiia",
+    "Scorpion:",
+    "Vera"
+]
 };
-
 /* ===== 2.  Переключение вкладок ===== */
 const content  = document.getElementById('content');
 const tab1Btn  = document.getElementById('tab1Btn');
@@ -352,7 +356,7 @@ function displaySchedule() {
             const dancerLi = document.createElement('li');
 
             const dancerButton = document.createElement('button');
-            dancerButton.textContent = dancer;
+            dancerButton.innerHTML = `<span>${dancer}</span>`;
             dancerButton.onclick = function(e) {
                 findDancer(dancer);
             };
@@ -395,34 +399,34 @@ function findDancer(name) {
     document.getElementById('dateDisplay').textContent = `${date}         ${name}`;
     document.getElementById('dateDisplay').style.display = 'block';
 
-    const ul = document.getElementById('scheduleListUl');
-    ul.innerHTML = '';
-    if (result.length === 0) {
-        ul.innerHTML = '<li>Не найдено</li>';
-    } else {
-        result.forEach(showName => {
-            const li = document.createElement('li');
-            li.textContent = showName;
-            ul.appendChild(li);
-        });
-    }
+const ul = document.getElementById('scheduleListUl');
+ul.innerHTML = '';
+if (result.length === 0) {
+    ul.innerHTML = '<li>Не найдено</li>';
+} else {
+    result.forEach(showName => {
+        const li = document.createElement('li');
+        li.textContent = showName;
+        ul.appendChild(li);
+    });
+}
 
-    // Очистить контейнер кнопки "начальная страница"
-    const backButtonContainer = document.getElementById('backButtonContainer');
-    backButtonContainer.innerHTML = '';
+// Очистить контейнер кнопки "начальная страница"
+const backButtonContainer = document.getElementById('backButtonContainer');
+backButtonContainer.innerHTML = '';
 
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
+// Добавляем кнопку "начальная страница" в контейнер
+const backButton = document.createElement('button');
+backButton.textContent = 'начальная страница';
+backButton.onclick = () => {
+    displaySchedule(); // Вернуться к общему расписанию
+};
+backButtonContainer.appendChild(backButton);
 }
 
 /* ===== 5.  Инициализация ===== */
 window.onload = () => {
-    displaySchedule();
+displaySchedule();
 };
 </script>
 </body>
