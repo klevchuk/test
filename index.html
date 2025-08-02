@@ -339,6 +339,14 @@ function displaySchedule() {
         ul.style.display = 'flex'; // Сделаем имена в строку
         ul.style.flexWrap = 'wrap'; // Разрешим перенос на новую строку, если нужно
         ul.style.gap = '10px'; // Добавляем отступы между кнопками
+        ul.style.marginTop = '10px'; // Добавляем отступ сверху
+        ul.style.marginBottom = '10px'; // Добавляем отступ снизу
+
+        const showNameDiv = document.createElement('div');
+        showNameDiv.textContent = showName;
+        showNameDiv.style.fontWeight = 'bold';
+        showNameDiv.style.fontSize = '18px';
+        showNameDiv.style.marginBottom = '5px';
 
         shows[showName].forEach(dancer => {
             const dancerLi = document.createElement('li');
@@ -352,11 +360,55 @@ function displaySchedule() {
 
             ul.appendChild(dancerLi);
         });
-        li.appendChild(ul);
-        scheduleListUl.appendChild(li);
+
+        const showContainer = document.createElement('div');
+        showContainer.appendChild(showNameDiv);
+        showContainer.appendChild(ul);
+        showContainer.style.border = '1px solid #d1c4e9';
+        showContainer.style.borderRadius = '5px';
+        showContainer.style.padding = '10px';
+        showContainer.style.marginBottom = '15px';
+
+        scheduleListUl.appendChild(showContainer);
     });
 
     // Очистить контейнер кнопки "начальная страница"
+    backButtonContainer.innerHTML = '';
+
+    // Добавляем кнопку "начальная страница" в контейнер
+    const backButton = document.createElement('button');
+    backButton.textContent = 'начальная страница';
+    backButton.onclick = () => {
+        displaySchedule(); // Вернуться к общему расписанию
+    };
+    backButtonContainer.appendChild(backButton);
+}
+
+function findDancer(name) {
+    const date = Object.keys(schedule)[0];
+    const shows = schedule[date];
+
+    const result = Object.keys(shows).filter(showName =>
+        shows[showName].includes(name)
+    );
+
+    document.getElementById('dateDisplay').textContent = `${date}         ${name}`;
+    document.getElementById('dateDisplay').style.display = 'block';
+
+    const ul = document.getElementById('scheduleListUl');
+    ul.innerHTML = '';
+    if (result.length === 0) {
+        ul.innerHTML = '<li>Не найдено</li>';
+    } else {
+        result.forEach(showName => {
+            const li = document.createElement('li');
+            li.textContent = showName;
+            ul.appendChild(li);
+        });
+    }
+
+    // Очистить контейнер кнопки "начальная страница"
+    const backButtonContainer = document.getElementById('backButtonContainer');
     backButtonContainer.innerHTML = '';
 
     // Добавляем кнопку "начальная страница" в контейнер
