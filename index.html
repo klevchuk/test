@@ -183,7 +183,9 @@ function generateCode() {
         msg.style.display = 'block';
         out.style.display = 'none';
         return;
-       const lines = raw.split(/\r?\n/);
+    }
+
+        const lines = raw.split(/\r?\n/);
     let date = '', i = 0;
     if (lines.length) date = lines[i++].trim();
 
