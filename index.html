@@ -159,12 +159,12 @@ const schedule = {
             "Lera"
         ],
         "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
-    "Lemon",
-    "Yaroslav",
-    "Andrey",
-    "Diana",
-    "Katya",
-    "Dasha"
+            "Lemon",
+"Yaroslav",
+"Andrey",
+"Diana",
+"Katya",
+"Dasha"
 ],
 "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
     "Anya",
@@ -213,6 +213,7 @@ const schedule = {
     "Vera"
 ]
 };
+
 /* ===== 2.  Переключение вкладок ===== */
 const content  = document.getElementById('content');
 const tab1Btn  = document.getElementById('tab1Btn');
@@ -396,21 +397,17 @@ function findDancer(name) {
         shows[showName].includes(name)
     );
 
-    document.getElementById('dateDisplay').textContent = `${date}         ${name}`;
-    document.getElementById('dateDisplay').style.display = 'block';
-
     const ul = document.getElementById('scheduleListUl');
     ul.innerHTML = '';
     if (result.length === 0) {
-        ul.innerHTML = '';
-if (result.length === 0) {
-    ul.innerHTML = '<li>Не найдено</li>';
-} else {
-    result.forEach(showName => {
-        const li = document.createElement('li');
-        li.textContent = showName;
-        ul.appendChild(li);
-    });
+        ul.innerHTML = '<li>Не найдено</li>';
+    } else {
+        result.forEach(showName => {
+            const li = document.createElement('li');
+    
+li.textContent = showName;
+ul.appendChild(li);
+});
 }
 
 // Очистить контейнер кнопки "начальная страница"
