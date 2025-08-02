@@ -88,84 +88,17 @@
 <script>
 /* ===== 1.  Встроенное расписание ===== */
 
-   const schedule = {
-    "30 июля": {
-        "Day off:": [
+const schedule = {
+    "2 августа": {
+        "Day off": [
+            "Lera"
+        ],
+        "❗️11:00 Chimelong hotel ❗️10:30 машинка от общаги": [
             "Ilya",
-            "Sofiia"
-        ],
-        "11:00 Chimelong hotel ❗️10:30 машинка от общаги": [
-            "Yulian",
-            "Anton",
-            "Diana",
-            "Masha",
-            "Miya"
-        ],
-        "❗️12:30 Katyusha  (magic theater come at 12:25)": [
-            "Yulian",
-            "Anton",
-            "Diana",
-            "Masha"
-        ],
-        "❗️13:45 mini parade (magic theater come at 13:40)": [
-            "Yaroslav",
-            "Lemon",
-            "Andrey",
-            "Dasha",
-            "Diana",
-            "Miya"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
-            "Lemon",
-            "Yulian",
-            "Anton",
-            "Katya",
-            "Masha",
-            "Lera"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
-            "Dasha",
-            "Anya"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Bull car": [
-            "Yaroslav",
-            "Andrey"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion": [
-            "Vera"
-        ],
-        "❗️16:15 Model (4D come at 16:10)": [
-            "Yulian",
             "Andrey",
             "Katya",
-            "Miya",
-            "Masha",
-            "Avrora"
-        ],
-        "❗️17:00 mini parade (magic theater come at 16:55)": [
-            "Yaroslav",
-            "Yulian",
-            "Anton",
-            "Miya",
-            "Dasha",
-            "Avrora"
-        ],
-        "❗️17:45 Party (come at 17:40)": [
-            "Yaroslav",
-            "Anton",
-            "Lemon",
-            "Anya",
-            "Katya",
-            "Lera"
-        ],
-        "❗️19:00 Evening parade (come at 18:30)": [
-            "Yaroslav",
-            "Lemon",
-            "Andrey",
-            "Anya",
-            "Avrora",
-            "Lera",
-            "Vera"
+            "Sofiia",
+            "Diana"
         ]
     }
 };
@@ -179,7 +112,7 @@ const pages    = content.children;
 function switchTab(n){
     [tab1Btn, tab2Btn].forEach((btn, i) => btn.classList.toggle('active', i === n));
     pages[0].style.transform = n === 0 ? 'translateX(0)' : 'translateX(-100%)';
-       pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
+    pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
 }
 tab1Btn.onclick = () => switchTab(0);
 tab2Btn.onclick = () => switchTab(1);
@@ -337,6 +270,14 @@ function findDancer(name) {
             ul.appendChild(li);
         });
     }
+
+    // Добавляем кнопку "начальная страница"
+    const backButton = document.createElement('button');
+    backButton.textContent = 'начальная страница';
+    backButton.onclick = () => {
+        displaySchedule(); // Вернуться к общему расписанию
+    };
+    ul.appendChild(backButton);
 }
 
 /* ===== 5.  Инициализация ===== */
