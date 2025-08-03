@@ -126,7 +126,7 @@
 <script>
 /* ===== 1.  Встроенное расписание ===== */
 
-    const schedule = {
+const schedule = {
     "3 августа": {
         "Day off:": [
             "Yulian",
@@ -340,7 +340,7 @@ function displaySchedule() {
     const date = Object.keys(schedule)[0];
     const shows = schedule[date];
 
-    dateDisplay.textContent = date;
+    dateDisplay.textContent = date; // Возвращаем только дату без имени
     scheduleListUl.innerHTML = '';
 
     if (Object.keys(shows).length === 0) {
@@ -424,6 +424,10 @@ function findDancer(name) {
             ul.appendChild(li);
         });
     }
+
+    // Обновляем заголовок даты с именем человека
+    const dateDisplay = document.getElementById('dateDisplay');
+    dateDisplay.textContent = `${date} (Расписание для ${name})`;
 
     // Очистить контейнер кнопки "начальная страница"
     const backButtonContainer = document.getElementById('backButtonContainer');
