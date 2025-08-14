@@ -1,451 +1,70 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Расписание шоу</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Окошко и кнопка</title>
     <style>
-        :root{
-            --bg:#f0f8f0;
-            --primary:#388e3c;
-            --accent:#9575cd;
-            --text:#4a148c;
-            --light:#fff;
-            --copy-color: #4caf50;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-        html,body{height:100%}
-        body{background:var(--bg);color:var(--text);display:flex;flex-direction:column}
-
-        header{background:var(--primary);color:var(--light);padding:12px 16px;font-size:18px;text-align:center}
-
-        .tabs{display:flex;height:48px}
-        .tab{flex:1;border:none;background:#e8f5f9;color:var(--primary);font-size:14px}
-        .tab.active{background:var(--light);border-bottom:3px solid var(--primary)}
-
-        .content{position:relative;overflow:hidden;height:calc(100vh - 48px - 48px)}
-        .tab-content{position:absolute;top:0;left:0;width:100%;height:100%;padding:16px;transition:transform .3s;overflow-y:auto}
-        .tab-content:nth-child(1){transform:translateX(0)}
-        .tab-content:nth-child(2){transform:translateX(100%)}
-
-        textarea{width:100%;min-height:180px;padding:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
-        input[type=password],input[type=text]{width:100%;padding:8px;margin-bottom:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
-        button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
-        button:active{background:#7e57c2}
-        button.copy-btn{background:var(--copy-color)}
-
-        .date-display{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
-        .dancer-list{background:#f3e5f5;border:1px solid #d1c4e9;border-radius:5px;padding:10px;margin-top:10px}
-        .dancer-list h3{color:#8c2c14;text-align:right;margin-bottom:5px;font-size:16px}
-        .dancer-list ul{list-style:none}
-        .dancer-list li{padding:4px 0;border-bottom:1px solid #e0e0e0}
-        .dancer-list li button {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 6px 12px;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-            margin: 0 5px;
-            text-decoration: none;
-            color: var(--text);
-            transition: background 0.3s, border 0.3s;
-        }
-        .dancer-list li button:hover {
-            background: rgba(255, 255, 255, 1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-        }
-        .dancer-list li button span {
+        input[type="text"] {
+            padding: 10px;
             font-size: 16px;
-            display: block;
-            text-align: center;
+            margin-bottom: 10px;
         }
-        .error,.success{margin-top:8px;font-size:14px}
-        pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
-
-        .back-button-container {
-            background: transparent;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .back-button-container button {
-            background: var(--light);
-            color: var(--primary);
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
+        button {
+            padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
         }
-        .back-button-container button:hover {
-            background: #e0f2f1;
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-<h3 style="color: red; position: fixed; top: 0; right: 0; margin: 0;">beta</h3>
-<header>Расписание шоу</header>
-
-<div class="tabs">
-    <button class="tab active" id="tab1Btn">Полное расписание</button>
-    <button class="tab" id="tab2Btn">Редактировать</button>
-</div>
-
-<div class="content" id="content">
-    <div class="tab-content" id="scheduleDisplay">
-        <div id="dateDisplay" class="date-display"></div>
-        <div id="scheduleList" class="dancer-list">
-            <h3>Расписание на день:</h3>
-            <ul id="scheduleListUl"></ul>
-        </div>
-        <div class="back-button-container" id="backButtonContainer"></div>
-    </div>
-
-    <div class="tab-content" id="schedule">
-        <textarea id="scheduleText" placeholder="дата: число и месяц
-
-название и инфо о шоу
-состав
-
-название и инфо о шоу
-состав
-
-...
-"></textarea>
-        <input type="password" id="password" placeholder="Пароль">
-        <button onclick="generateCode()">обработать</button>
-        <button class="copy-btn" onclick="copyToClipboard()">копировать</button>
-        <div id="saveMsg" style="display:none"></div>
-        <pre id="generatedCode" style="display:none;margin-top:8px"></pre>
-    </div>
-</div>
+<input type="text" id="userInput" placeholder="Введите текст здесь">
+<button onclick="handleClick()">Отправить</button>
+<div id="result"></div>
 
 <script>
-/* ===== 1.  Встроенное расписание ===== */
+    function countMatches(str, arr) {
+        let result = ""; // Создать пустую строку для записи результатов
 
-const schedule = {
-    "3 августа": {
-        "Day off:": [
-            "Yulian",
-            "Datri"
-        ],
-        "11:00 Chimelong hotel ❗️10:30 машинка от общаги": [
-            "Lemon",
-            "Anton",
-            "Anya",
-            "Avrora",
-            "Dasha"
-        ],
-        "❗️12:30 Katyusha  (magic theater come at 12:25)": [
-            "Lemon",
-            "Anton",
-            "Anya",
-            "Avrora"
-        ],
-        "❗️❗️13:45 mini parade (magic theater come at 13:40)": [
-            "Lemon",
-            "Andrey",
-            "Anton",
-            "Miya",
-            "Avrora",
-            "Lera"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Dragon": [
-            "Lemon",
-            "Yaroslav",
-            "Andrey",
-            "Diana",
-            "Katya",
-            "Dasha"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Mini car": [
-            "Anya",
-            "Lera"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Bull car": [
-            "Ilya",
-            "Anton"
-        ],
-        "❗️ 15:00 Parade (come at 14:30) Собрание в 14:45 Scorpion": [
-            "Vera"
-        ],
-        "❗️16:15 Model (4D come at 16:10)": [
-            "Yaroslav",
-            "Lemon",
-            "Diana",
-            "Miya",
-            "Masha",
-            "Sofiia"
-        ],
-        "❗️17:00 mini parade (magic theater come at 16:55)": [
-            "Yaroslav",
-            "Ilya",
-            "Andrey",
-            "Diana",
-            "Masha",
-            "Lera"
-        ],
-        "❗️17:45 Party (come at 17:40)": [
-            "Yaroslav",
-            "Ilya",
-            "Andrey",
-            "Katya",
-            "Miya",
-            "Sofiia"
-        ],
-        "❗️19:00 Evening parade (come at 18:30)": [
-            "Rhinoceros:",
-            "Yaroslav",
-            "Ilya",
-            "Andrey",
-            "Katya",
-            "Masha",
-            "Sofiia",
-            "Scorpion:",
-            "Vera"
-        ]
-    }
-};
-
-/* ===== 2.  Переключение вкладок ===== */
-const content = document.getElementById('content');
-const tab1Btn = document.getElementById('tab1Btn');
-const tab2Btn = document.getElementById('tab2Btn');
-const pages = content.children;
-
-function switchTab(n) {
-    [tab1Btn, tab2Btn].forEach((btn, i) => btn.classList.toggle('active', i === n));
-    pages[0].style.transform = n === 0 ? 'translateX(0)' : 'translateX(-100%)';
-    pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
-}
-tab1Btn.onclick = () => switchTab(0);
-tab2Btn.onclick = () => switchTab(1);
-
-// Добавляем обработчик для смахивания
-let startX;
-
-document.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-});
-
-document.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const deltaX = startX - endX;
-
-    if (Math.abs(deltaX) > 50) {
-        if (deltaX > 0) {
-            // Смахивание влево
-            switchTab(1);
-        } else {
-            // Смахивание вправо
-            switchTab(0);
+        if (!str) {
+            return "Вы не ввели текст. Пожалуйста, введите текст для поиска.";
         }
-    }
-});
 
-/* ===== 3.  Генерация кода ===== */
-function generateCode() {
-    const pwd = document.getElementById('password').value.trim();
-    const msg = document.getElementById('saveMsg');
-    const out = document.getElementById('generatedCode');
-
-    if (pwd !== '123') {
-        msg.textContent = 'Неверный пароль';
-        msg.className = 'error';
-        msg.style.display = 'block';
-        out.style.display = 'none';
-        return;
-    }
-
-    const raw = document.getElementById('scheduleText').value.trim();
-    if (!raw) {
-        msg.textContent = 'Пустое расписание';
-        msg.className = 'error';
-        msg.style.display = 'block';
-        out.style.display = 'none';
-        return;
-    }
-
-    const lines = raw.split(/\r?\n/);
-    let date = '', i = 0;
-    if (lines.length) date = lines[i++].trim();
-
-    const shows = {};
-    while (i < lines.length) {
-        while (i < lines.length && lines[i].trim() === '') i++;
-        if (i >= lines.length) break;
-
-        const showName = lines[i++].trim();
-        if (!showName) continue;
-
-        const dancers = [];
-        while (i < lines.length && lines[i].trim() !== '') {
-            lines[i].split(',').forEach(p => {
-                const d = p.trim();
-                if (d) dancers.push(d);
-            });
-            i++;
+        for (let i = 0; i < arr.length; i++) {
+            let count = 0;
+            let index = str.indexOf(arr[i]);
+            while (index !== -1) {
+                count++;
+                index = str.indexOf(arr[i], index + 1);
+            }
+            if (count > 0) {
+                result += `"${arr[i]}" matches: ${count} <br>`; // Добавить результат в строку с переносом строки
+            }
         }
-        shows[showName] = dancers;
-    }
-    const obj = { [date]: shows };
 
-    const code = `const schedule = ${JSON.stringify(obj, null, 4)};`;
-    out.textContent = code;
-    out.style.display = 'block';
+        if (result === "") {
+            result = "Нет совпадений.";
+        }
 
-    msg.textContent = 'Скопируйте код выше и вставьте в переменную schedule';
-    msg.className = 'success';
-    msg.style.display = 'block';
-}
-
-function copyToClipboard() {
-    const generatedCode = document.getElementById('generatedCode');
-    if (generatedCode.style.display === 'none') {
-        alert('Сначала сгенерируйте код!');
-        return;
-    }
-    const code = generatedCode.textContent;
-    navigator.clipboard.writeText(code)
-        .then(() => {
-            const saveMsg = document.getElementById('saveMsg');
-            saveMsg.textContent = 'Скопировано!';
-            saveMsg.className = 'success';
-            saveMsg.style.display = 'block';
-            setTimeout(() => {
-                saveMsg.style.display = 'none';
-            }, 2000);
-        })
-        .catch(err => {
-            console.error('Не удалось скопировать:', err);
-            const saveMsg = document.getElementById('saveMsg');
-            saveMsg.textContent = 'Не удалось скопировать';
-            saveMsg.className = 'error';
-            saveMsg.style.display = 'block';
-            setTimeout(() => {
-                saveMsg.style.display = 'none';
-            }, 2000);
-        });
-}
-
-/* ===== 4.  Отображение полного расписания и поиск танцора ===== */
-function displaySchedule() {
-    const dateDisplay = document.getElementById('dateDisplay');
-    const scheduleListUl = document.getElementById('scheduleListUl');
-    const backButtonContainer = document.getElementById('backButtonContainer');
-
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-
-    dateDisplay.textContent = date; // Возвращаем только дату без имени
-    scheduleListUl.innerHTML = '';
-
-    if (Object.keys(shows).length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'Расписание пусто';
-        scheduleListUl.appendChild(li);
-        return;
+        console.log(result); // Вывести результат в консоль
+        return result; // Вернуть результат
     }
 
-    Object.keys(shows).forEach(showName => {
-        const li = document.createElement('li');
-        li.textContent = showName;
+    function handleClick() {
+        const userInput = document.getElementById('userInput').value;
+        const arr = ["Anya", "Diana", "Alona", "Katya", "Daria", "Dasha", "Masha", "Mery", "Kristina", "Krava", "Milka", "Miya", "Sofiia", "Sapronova", "Bordiian", "Datri", "Tetiana", "Vera", "Avrora", "Vika", "Lera", "Ilya", "Evgeny", "Max", "Yaroslav", "Lemon", "Rustam", "Daniil", "Mikhail", "Sergey", "Klimenko", "Anton", "Mars", "Yulian", "Oleg", "Rostik", "Andrey", "Denis"];
 
-        const ul = document.createElement('ul');
-        ul.style.display = 'flex';
-        ul.style.flexWrap = 'wrap';
-        ul.style.gap = '5px';
-        ul.style.marginTop = '5px';
-        ul.style.marginBottom = '5px';
-
-        const showNameDiv = document.createElement('div');
-        showNameDiv.textContent = showName;
-        showNameDiv.style.fontWeight = 'bold';
-        showNameDiv.style.fontSize = '14px';
-        showNameDiv.style.marginBottom = '5px';
-
-        shows[showName].forEach(dancer => {
-            const dancerLi = document.createElement('li');
-
-            const dancerButton = document.createElement('button');
-            dancerButton.innerHTML = `<span>${dancer}</span>`;
-            dancerButton.onclick = function(e) {
-                findDancer(dancer);
-            };
-            dancerLi.appendChild(dancerButton);
-
-            ul.appendChild(dancerLi);
-        });
-
-        const showContainer = document.createElement('div');
-        showContainer.appendChild(showNameDiv);
-        showContainer.appendChild(ul);
-        showContainer.style.border = '1px solid #d1c4e9';
-        showContainer.style.borderRadius = '5px';
-        showContainer.style.padding = '5px';
-        showContainer.style.marginBottom = '10px';
-
-        scheduleListUl.appendChild(showContainer);
-    });
-
-    // Очистить контейнер кнопки "начальная страница"
-    backButtonContainer.innerHTML = '';
-
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
-}
-
-function findDancer(name) {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-
-    const result = Object.keys(shows).filter(showName =>
-        shows[showName].includes(name)
-    );
-
-    const ul = document.getElementById('scheduleListUl');
-    ul.innerHTML = '';
-    if (result.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'Не найдено';
-        ul.appendChild(li);
-    } else {
-        result.forEach(showName => {
-            const li = document.createElement('li');
-            li.textContent = showName;
-            ul.appendChild(li);
-        });
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `Результат: <br> ${countMatches(userInput, arr)}`; // Отобразить результат на экране пользователя
     }
-
-    // Обновляем заголовок даты с именем человека
-    const dateDisplay = document.getElementById('dateDisplay');
-    dateDisplay.textContent = `${date} (${name})`;
-
-    // Очистить контейнер кнопки "начальная страница"
-    const backButtonContainer = document.getElementById('backButtonContainer');
-    backButtonContainer.innerHTML = '';
-
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
-}
-
-/* ===== 5.  Инициализация ===== */
-window.onload = () => {
-    displaySchedule();
-};
 </script>
 </body>
 </html>
