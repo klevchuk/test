@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="apple-touch-icon" sizes="180x180" href="https://klevchuk.github.io/scheduleForDancers/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://klevchuk.github.io/scheduleForDancers/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://klevchuk.github.io/scheduleForDancers/favicon-16x16.png">
+    <link rel="manifest" href="https://klevchuk.github.io/scheduleForDancers/site.webmanifest">
+    <link rel="shortcut icon" href="https://klevchuk.github.io/scheduleForDancers/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Создание расписания</title>
+    <title>Расписание шоу</title>
     <style>
         :root{
             --bg:#f0f8f0;
@@ -19,9 +24,20 @@
 
         header{background:var(--primary);color:var(--light);padding:12px 16px;font-size:18px;text-align:center}
 
+        .tabs{display:flex;height:48px}
+        .tab{flex:1;border:none;background:#e8f5f9;color:var(--primary);font-size:14px}
+        .tab.active{background:var(--light);border-bottom:3px solid var(--primary)}
+
+        .content{position:relative;overflow:hidden;height:calc(100vh - 48px - 48px)}
+        .tab-content{position:absolute;top:0;left:0;width:100%;height:100%;padding:16px;transition:transform .3s;overflow-y:auto}
+        .tab-content:nth-child(1){transform:translateX(0)}
+        .tab-content:nth-child(2){transform:translateX(100%)}
+
         textarea{width:100%;min-height:180px;padding:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
+        input[type=password],input[type=text]{width:100%;padding:8px;margin-bottom:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
         button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
         button:active{background:#7e57c2}
+        button.copy-btn{background:var(--copy-color)}
 
         .date-display{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
         .dancer-list{background:#f3e5f5;border:1px solid #d1c4e9;border-radius:5px;padding:10px;margin-top:10px}
@@ -52,13 +68,49 @@
         }
         .error,.success{margin-top:8px;font-size:14px}
         pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
+
+        .back-button-container {
+            background: transparent;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .back-button-container button {
+            background: var(--light);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .back-button-container button:hover {
+            background: #e0f2f1;
+        }
     </style>
 </head>
 <body>
-<header>Создание расписания</header>
+<h3 style="color: red; position: fixed; top: 0; right: 0; margin: 0;">beta</h3>
+<header>Расписание шоу</header>
 
-<div>
-    <textarea id="scheduleText" placeholder="дата: число и месяц
+<div class="tabs">
+    <button class="tab active" id="tab1Btn">Полное расписание</button>
+    <button class="tab" id="tab2Btn">Редактировать</button>
+</div>
+
+<div class="content" id="content">
+    <div class="tab-content" id="scheduleDisplay">
+        <div id="dateDisplay" class="date-display"></div>
+        <div id="scheduleList" class="dancer-list">
+            <h3>Расписание на день:</h3>
+            <ul id="scheduleListUl"></ul>
+        </div>
+        <div class="back-button-container" id="backButtonContainer"></div>
+    </div>
+
+    <div class="tab-content" id="schedule">
+        <textarea id="scheduleText" placeholder="дата: число и месяц
 
 название и инфо о шоу
 состав
@@ -68,27 +120,77 @@
 
 ...
 "></textarea>
-    <button onclick="processSchedule()">Начать</button>
-</div>
-
-<div id="scheduleDisplay" class="dancer-list" style="display:none;">
-    <h3>Расписание на день:</h3>
-    <ul id="scheduleListUl"></ul>
+        <input type="password" id="password" placeholder="Пароль">
+        <button onclick="generateCode()">обработать</button>
+        <button class="copy-btn" onclick="copyToClipboard()">копировать</button>
+        <div id="saveMsg" style="display:none"></div>
+        <pre id="generatedCode" style="display:none;margin-top:8px"></pre>
+    </div>
 </div>
 
 <script>
-function processSchedule() {
-    const scheduleText = document.getElementById('scheduleText').value.trim();
-    const scheduleDisplay = document.getElementById('scheduleDisplay');
-    const scheduleListUl = document.getElementById('scheduleListUl');
+let schedule = {}; // Глобальная переменная для хранения расписания
 
-    if (!scheduleText) {
-        alert('Пожалуйста, введите расписание.');
+/* ===== 2.  Переключение вкладок ===== */
+const content = document.getElementById('content');
+const tab1Btn = document.getElementById('tab1Btn');
+const tab2Btn = document.getElementById('tab2Btn');
+const pages = content.children;
+
+function switchTab(n) {
+    [tab1Btn, tab2Btn].forEach((btn, i) => btn.classList.toggle('active', i === n));
+    pages[0].style.transform = n === 0 ? 'translateX(0)' : 'translateX(-100%)';
+    pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
+}
+tab1Btn.onclick = () => switchTab(0);
+tab2Btn.onclick = () => switchTab(1);
+
+// Добавляем обработчик для смахивания
+let startX;
+
+document.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+});
+
+document.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const deltaX = startX - endX;
+
+    if (Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+            // Смахивание влево
+            switchTab(1);
+        } else {
+            // Смахивание вправо
+            switchTab(0);
+        }
+    }
+});
+
+/* ===== 3.  Генерация кода ===== */
+function generateCode() {
+    const pwd = document.getElementById('password').value.trim();
+    const msg = document.getElementById('saveMsg');
+    const out = document.getElementById('generatedCode');
+
+    if (pwd !== '123') {
+        msg.textContent = 'Неверный пароль';
+        msg.className = 'error';
+        msg.style.display = 'block';
+        out.style.display = 'none';
         return;
     }
 
-    // 解析日程内容
-    const lines = scheduleText.split(/\r?\n/);
+    const raw = document.getElementById('scheduleText').value.trim();
+    if (!raw) {
+        msg.textContent = 'Пустое расписание';
+        msg.className = 'error';
+        msg.style.display = 'block';
+        out.style.display = 'none';
+        return;
+    }
+
+    const lines = raw.split(/\r?\n/);
     let date = '', i = 0;
     if (lines.length) date = lines[i++].trim();
 
@@ -110,10 +212,66 @@ function processSchedule() {
         }
         shows[showName] = dancers;
     }
+    schedule = { [date]: shows }; // Обновляем глобальную переменную schedule
 
-    // 显示日程
-    scheduleDisplay.style.display = 'block';
+    const code = `const schedule = ${JSON.stringify(schedule, null, 4)};`;
+    out.textContent = code;
+    out.style.display = 'block';
+
+    msg.textContent = 'Скопируйте код выше и вставьте в переменную schedule';
+    msg.className = 'success';
+    msg.style.display = 'block';
+
+    displaySchedule(); // Обновляем первую вкладку с расписанием
+}
+
+function copyToClipboard() {
+    const generatedCode = document.getElementById('generatedCode');
+    if (generatedCode.style.display === 'none') {
+        alert('Сначала сгенерируйте код!');
+        return;
+    }
+    const code = generatedCode.textContent;
+    navigator.clipboard.writeText(code)
+        .then(() => {
+            const saveMsg = document.getElementById('saveMsg');
+            saveMsg.textContent = 'Скопировано!';
+            saveMsg.className = 'success';
+            saveMsg.style.display = 'block';
+            setTimeout(() => {
+                saveMsg.style.display = 'none';
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Не удалось скопировать:', err);
+            const saveMsg = document.getElementById('saveMsg');
+            saveMsg.textContent = 'Не удалось скопировать';
+            saveMsg.className = 'error';
+            saveMsg.style.display = 'block';
+            setTimeout(() => {
+                saveMsg.style.display = 'none';
+            }, 2000);
+        });
+}
+
+/* ===== 4.  Отображение полного расписания и поиск танцора ===== */
+function displaySchedule() {
+    const dateDisplay = document.getElementById('dateDisplay');
+    const scheduleListUl = document.getElementById('scheduleListUl');
+    const backButtonContainer = document.getElementById('backButtonContainer');
+
+    const date = Object.keys(schedule)[0];
+    const shows = schedule[date];
+
+    dateDisplay.textContent = date; // Возвращаем только дату без имени
     scheduleListUl.innerHTML = '';
+
+    if (Object.keys(shows).length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'Расписание пусто';
+        scheduleListUl.appendChild(li);
+        return;
+    }
 
     Object.keys(shows).forEach(showName => {
         const li = document.createElement('li');
@@ -126,16 +284,91 @@ function processSchedule() {
         ul.style.marginTop = '5px';
         ul.style.marginBottom = '5px';
 
+        const showNameDiv = document.createElement('div');
+        showNameDiv.textContent = showName;
+        showNameDiv.style.fontWeight = 'bold';
+        showNameDiv.style.fontSize = '14px';
+        showNameDiv.style.marginBottom = '5px';
+
         shows[showName].forEach(dancer => {
             const dancerLi = document.createElement('li');
-            dancerLi.textContent = dancer;
+
+            const dancerButton = document.createElement('button');
+            dancerButton.innerHTML = `<span>${dancer}</span>`;
+            dancerButton.onclick = function(e) {
+                findDancer(dancer);
+            };
+            dancerLi.appendChild(dancerButton);
+
             ul.appendChild(dancerLi);
         });
 
-        li.appendChild(ul);
-        scheduleListUl.appendChild(li);
+        const showContainer = document.createElement('div');
+        showContainer.appendChild(showNameDiv);
+        showContainer.appendChild(ul);
+        showContainer.style.border = '1px solid #d1c4e9';
+        showContainer.style.borderRadius = '5px';
+        showContainer.style.padding = '5px';
+        showContainer.style.marginBottom = '10px';
+
+        scheduleListUl.appendChild(showContainer);
     });
+
+    // Очистить контейнер кнопки "начальная страница"
+    backButtonContainer.innerHTML = '';
+
+    // Добавляем кнопку "начальная страница" в контейнер
+    const backButton = document.createElement('button');
+    backButton.textContent = 'начальная страница';
+    backButton.onclick = () => {
+        displaySchedule(); // Вернуться к общему расписанию
+    };
+    backButtonContainer.appendChild(backButton);
 }
+
+function findDancer(name) {
+    const date = Object.keys(schedule)[0];
+    const shows = schedule[date];
+
+    const result = Object.keys(shows).filter(showName =>
+        shows[showName].includes(name)
+    );
+
+    const ul = document.getElementById('scheduleListUl');
+    ul.innerHTML = '';
+    if (result.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'Не найдено';
+        ul.appendChild(li);
+    } else {
+        result.forEach(showName => {
+            const li = document.createElement('li');
+            li.textContent = showName;
+            ul.appendChild(li);
+        });
+    }
+
+    // Обновляем заголовок даты с именем человека
+    const dateDisplay = document.getElementById('dateDisplay');
+    dateDisplay.textContent = `${date} (${name})`;
+
+    // Очистить контейнер кнопки "начальная страница"
+    const backButtonContainer = document.getElementById('backButtonContainer');
+    backButtonContainer.innerHTML = '';
+
+    // Добавляем кнопку "начальная страница" в контейнер
+    const backButton = document.createElement('button');
+    backButton.textContent = 'начальная страница';
+    backButton.onclick = () => {
+        displaySchedule(); // Вернуться к общему расписанию
+    };
+    backButtonContainer.appendChild(backButton);
+}
+
+/* ===== 5.  Инициализация ===== */
+window.onload = () => {
+    displaySchedule();
+};
 </script>
 </body>
 </html>
