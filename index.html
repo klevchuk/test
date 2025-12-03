@@ -1,75 +1,286 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Расписание танцоров</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        textarea {
-            width: 100%;
-            height: 150px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            margin-top: 20px;
-        }
-    </style>
+<link rel="apple-touch-icon" sizes="180x180" href="https://klevchuk.github.io/scheduleForDancers/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://klevchuk.github.io/scheduleForDancers/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://klevchuk.github.io/scheduleForDancers/favicon-16x16.png">
+<link rel="manifest" href="https://klevchuk.github.io/scheduleForDancers/site.webmanifest">
+<link rel="shortcut icon" href="https://klevchuk.github.io/scheduleForDancers/favicon.ico" type="image/x-icon">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Расписание шоу</title>
+<style>
+:root{
+--bg:#f0f8f0;
+--primary:#388e3c;
+--accent:#9575cd;
+--text:#4a148c;
+--light:#fff;
+--copy-color: #4caf50;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+
+header{background:var(--primary);color:var(--light);padding:12px 16px;font-size:18px;text-align:center}
+
+.content{position:relative;overflow:hidden;height:calc(100vh - 48px)}
+.tab-content{position:absolute;top:0;left:0;width:100%;height:100%;padding:16px;transition:transform .3s;overflow-y:auto}
+
+textarea{width:100%;min-height:180px;padding:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
+input[type=password],input[type=text]{width:100%;padding:8px;margin-bottom:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
+button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
+button:active{background:#7e57c2}
+button.copy-btn{background:var(--copy-color)}
+
+.date-display{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
+.dancer-list{background:#f3e5f5;border:1px solid #d1c4e9;border-radius:5px;padding:10px;margin-top:10px}
+.dancer-list h3{color:#8c2c14;text-align:right;margin-bottom:5px;font-size:16px}
+.dancer-list ul{list-style:none}
+.dancer-list li{padding:4px 0;border-bottom:1px solid #e0e0e0}
+.dancer-list li button {
+background: rgba(255, 255, 255, 0.8);
+border: 1px solid rgba(0, 0, 0, 0.1);
+border-radius: 10px;
+padding: 6px 12px;
+font-size: 14px;
+cursor: pointer;
+text-align: center;
+margin: 0 5px;
+text-decoration: none;
+color: var(--text);
+transition: background 0.3s, border 0.3s;
+}
+.dancer-list li button:hover {
+background: rgba(255, 255, 255, 1);
+border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.dancer-list li button span {
+font-size: 16px;
+display: block;
+text-align: center;
+}
+.error,.success{margin-top:8px;font-size:14px}
+pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
+
+.back-button-container {
+background: transparent;
+padding: 10px;
+text-align: center;
+border-radius: 5px;
+margin-top: 10px;
+}
+.back-button-container button {
+background: var(--light);
+color: var(--primary);
+border: none;
+border-radius: 5px;
+padding: 10px;
+font-size: 16px;
+cursor: pointer;
+}
+.back-button-container button:hover {
+background: #e0f2f1;
+}
+</style>
 </head>
 <body>
-    <h1>Ввод расписания</h1>
-    <textarea id="scheduleInput" placeholder="Введите расписание здесь"></textarea>
-    <button onclick="generateSchedule()">Старт</button>
-    <div class="result" id="result"></div>
+<h3 style="color: red; position: fixed; top: 0; right: 0; margin: 0;">beta</h3>
+<header>Расписание шоу</header>
 
-    <script>
-        function generateSchedule() {
-            const input = document.getElementById('scheduleInput').value.trim();
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = ''; // Очистить предыдущий результат
+<div class="content" id="content">
+<div class="tab-content" id="scheduleDisplay">
+<input type="text" id="dancerInput" placeholder="Введите имя танцора">
+<button onclick="showDancerSchedule()">Пуск</button>
+<div id="dancerSchedule" class="dancer-list"></div>
+</div>
+</div>
 
-            if (!input) {
-                resultDiv.innerHTML = '<p>Пожалуйста, введите расписание.</p>';
-                return;
-            }
+<script>
+const schedule = {
+"4 декабря": {
+"Day off": [
+"Diana",
+"Lemon",
+"Rostik"
+],
+"❗️11:50 вальс (карусель, come at 11:45)": [
+"Anton",
+"Yulian",
+"Andrey",
+"Sofiia",
+"Milka",
+"Avrora"
+],
+"❗️13:00 Кан Кан (magic theatre, come at 12:55)": [
+"Dima",
+"Denis",
+"Alexandra",
+"Lera"
+],
+"❗️13:10 мужской (come at 13:05)": [
+"Akmal",
+"Evgeny",
+"Anatoly",
+"Eduard"
+],
+"❗️13:00-13:30 фото тайм (come at 12:55 1д, 2д, 1м)": [
+"Vera",
+"Datri",
+"Alexey"
+],
+"❗️13:20 вальс (карусель, come at 13:15)": [
+"Anton",
+"Ilya",
+"Yulian",
+"Sofiia",
+"Krava",
+"Milka"
+],
+"❗️13:20-13:50 фото тайм (come at 13:15, 3м)": [
+"Max"
+],
+"❗️13:30-14:00 фото тайм (come at 13:25 королева) ❗️ +13:45 mini parade": [
+"Tanya"
+],
+"❗️14:00 You can do it (come at 13:45)": [
+"Akmal",
+"Anatoly",
+"Evgeny",
+"Alexey",
+"Dasha",
+"Daria",
+"Lera",
+"Vika"
+],
+"❗️14:05 Кан Кан (magic theatre, come at 14:00)": [
+"Denis",
+"Andrey",
+"Krava",
+"Alexandra"
+],
+"❗️14:55 мини парад": [
+"Tanya"
+],
+"❗️14:50-15:20 фото тайм (come at 14:45 2м,3д, 5д)": [
+"Dima",
+"Miya",
+"Dasha"
+],
+"❗️15:10 мужской (come at 15:05)": [
+"Eduard",
+"Evgeny",
+"Ilya",
+"Akmal"
+],
+"❗️15:25 Кан Кан (magic theatre, come at 15:20)": [
+"Andrey",
+"Denis",
+"Alexandra",
+"Daria"
+],
+"❗️15:50 Вальс (карусель, come at 15:45)": [
+"Anton",
+"Ilya",
+"Anton",
+"Ilya",
+"Yulian",
+"Sofiia",
+"Milka",
+"Krava"
+],
+"❗️16:00 you can do it ( come at 15:45)": [
+"Akmal",
+"Andrey",
+"Alexey",
+"Denis",
+"Vika",
+"Lera",
+"Daria",
+"Avrora"
+],
+"❗️16:20-16:50 фото тайм (come at 16:15 королева) +16:25 mini parade": [
+"Tanya"
+],
+"❗️16:20 Кан Кан (magic theatre, come at 16:15)": [
+"Yulian",
+"Dima",
+"Milka",
+"Alexandra"
+],
+"❗️16:20 мужской (come at 16:15)": [
+"Eduard",
+"Ilya",
+"Evgeny",
+"Anatoly"
+],
+"❗️16:30-17:00 фото тайм (come at 16:25 1д, 3м)": [
+"Max",
+"Datri"
+],
+"❗️16:50-17:20 фото тайм (come at 16:25 3д, 5д)": [
+"Vika",
+"Miya"
+],
+"❗️17:00-17:30 фото тайм (come at 16:55, 2м)": [
+"Dima"
+],
+"❗️17:20 Party (come at 17:15 ❗️ после Колумбии ❗️❗️❗️)": [
+"Alexey",
+"Akmal",
+"Eduard",
+"Max",
+"Andrey",
+"Anton",
+"Dasha",
+"Sofiia",
+"Avrora",
+"Daria",
+"Lera",
+"Krava"
+],
+"❗️17:20-17:50 фото тайм (come at 17:15 1м)": [
+"Anatoly"
+],
+"❗️17:30-18:00 фото тайм (come at 17:05 2д)": [
+"Vera"
+]
+}
+};
 
-            const lines = input.split('\n');
-            const schedule = {};
+function showDancerSchedule() {
+const input = document.getElementById('dancerInput').value.trim();
+const dancerScheduleDiv = document.getElementById('dancerSchedule');
+dancerScheduleDiv.innerHTML = '';
 
-            lines.forEach(line => {
-                const trimmedLine = line.trim();
-                if (trimmedLine === '') return;
+if (!input) {
+dancerScheduleDiv.innerHTML = '<p>Введите имя танцора</p>';
+return;
+}
 
-                const [showName, dancersStr] = trimmedLine.split(':').map(s => s.trim());
-                if (!schedule[showName]) {
-                    schedule[showName] = [];
-                }
-                const dancers = dancersStr.split(',').map(d => d.trim());
-                schedule[showName].push(...dancers);
-            });
+const date = Object.keys(schedule)[0];
+const shows = schedule[date];
+const showsList = Object.keys(shows);
 
-            // Выводим результат
-            const resultUl = document.createElement('ul');
-            for (const [showName, dancers] of Object.entries(schedule)) {
-                const li = document.createElement('li');
-                li.textContent = `${showName}: ${dancers.join(', ')}`;
-                resultUl.appendChild(li);
-            }
-            resultDiv.appendChild(resultUl);
-        }
-    </script>
+const showsForDancer = showsList.filter(show => shows[show].includes(input));
+
+if (showsForDancer.length === 0) {
+dancerScheduleDiv.innerHTML = `<p>Танцор ${input} не найден в расписании</p>`;
+return;
+}
+
+const h3 = document.createElement('h3');
+h3.textContent = `Расписание для ${input}:`;
+dancerScheduleDiv.appendChild(h3);
+
+const ul = document.createElement('ul');
+showsForDancer.forEach(show => {
+const li = document.createElement('li');
+li.textContent = show;
+ul.appendChild(li);
+});
+dancerScheduleDiv.appendChild(ul);
+}
+</script>
 </body>
 </html>
