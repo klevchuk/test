@@ -1,90 +1,79 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Расписание шоу</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание танцоров</title>
     <style>
-        :root{
-            --bg:#f0f8f0;
-            --primary:#388e3c;
-            --accent:#9575cd;
-            --text:#4a148c;
-            --light:#fff;
-            --copy-color: #4caf50;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-        html,body{height:100%}
-        body{background:var(--bg);color:var(--text);display:flex;flex-direction:column}
-
-        header{background:var(--primary);color:var(--light);padding:12px 16px;font-size:18px;text-align:center}
-
-        .content{position:relative;overflow:hidden;height:calc(100vh - 48px - 48px)}
-        .content textarea{width:100%;min-height:180px;padding:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
-        .content button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
-        .content button:active{background:#7e57c2}
-
-        .result{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
-        .result ul{list-style:none}
-        .result li{padding:4px 0;border-bottom:1px solid #e0e0e0}
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-<header>Расписание шоу</header>
+    <h1>Ввод расписания</h1>
+    <textarea id="scheduleInput" placeholder="Введите расписание здесь"></textarea>
+    <button onclick="generateSchedule()">Старт</button>
+    <div class="result" id="result"></div>
 
-<div class="content">
-    <textarea id="scheduleText" placeholder="Введите расписание здесь..."></textarea>
-    <button onclick="showResult()">Показать результат</button>
-    <button onclick="clearResult()">Стереть результат</button>
-    <div id="result" class="result"></div>
-</div>
+    <script>
+        function generateSchedule() {
+            const input = document.getElementById('scheduleInput').value.trim();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Очистить предыдущий результат
 
-<script>
-function showResult() {
-    const scheduleText = document.getElementById('scheduleText').value.trim();
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = '';
+            if (!input) {
+                resultDiv.innerHTML = '<p>Пожалуйста, введите расписание.</p>';
+                return;
+            }
 
-    if (!scheduleText) {
-        resultDiv.innerHTML = '<p>Введите расписание!</p>';
-        return;
-    }
+            const lines = input.split('\n');
+            const schedule = {};
+            let currentDancer = '';
 
-    const lines = scheduleText.split('\n');
-    const schedule = {};
-    let currentPerson = '';
+            lines.forEach(line => {
+                const trimmedLine = line.trim();
+                if (trimmedLine === '') return;
 
-    lines.forEach(line => {
-        if (line.startsWith('дата:')) {
-            currentPerson = line.split(':')[1].trim();
-            schedule[currentPerson] = [];
-        } else if (line.trim() !== '') {
-            schedule[currentPerson].push(line.trim());
+                if (trimmedLine.includes(':')) {
+                    // Это новое имя танцора
+                    const [name, shows] = trimmedLine.split(':').map(s => s.trim());
+                    currentDancer = name;
+                    schedule[currentDancer] = shows.split(',').map(s => s.trim());
+                } else {
+                    // Это дополнительные шоу для текущего танцора
+                    schedule[currentDancer].push(trimmedLine.trim());
+                }
+            });
+
+            // Выводим результат
+            const resultUl = document.createElement('ul');
+            for (const [dancer, shows] of Object.entries(schedule)) {
+                const li = document.createElement('li');
+                li.textContent = `${dancer}: ${shows.join(', ')}`;
+                resultUl.appendChild(li);
+            }
+            resultDiv.appendChild(resultUl);
         }
-    });
-
-    const resultUl = document.createElement('ul');
-    for (const person in schedule) {
-        const personLi = document.createElement('li');
-        personLi.textContent = person;
-        resultUl.appendChild(personLi);
-
-        const showsUl = document.createElement('ul');
-        schedule[person].forEach(show => {
-            const showLi = document.createElement('li');
-            showLi.textContent = show;
-            showsUl.appendChild(showLi);
-        });
-        resultUl.appendChild(showsUl);
-    }
-
-    resultDiv.appendChild(resultUl);
-}
-
-function clearResult() {
-    document.getElementById('scheduleText').value = '';
-    document.getElementById('result').innerHTML = '';
-}
-</script>
+    </script>
 </body>
 </html>
