@@ -48,28 +48,24 @@
 
             const lines = input.split('\n');
             const schedule = {};
-            let currentDancer = '';
 
             lines.forEach(line => {
                 const trimmedLine = line.trim();
                 if (trimmedLine === '') return;
 
-                if (trimmedLine.includes(':')) {
-                    // Это новое имя танцора
-                    const [name, shows] = trimmedLine.split(':').map(s => s.trim());
-                    currentDancer = name;
-                    schedule[currentDancer] = shows.split(',').map(s => s.trim());
-                } else {
-                    // Это дополнительные шоу для текущего танцора
-                    schedule[currentDancer].push(trimmedLine.trim());
+                const [showName, dancersStr] = trimmedLine.split(':').map(s => s.trim());
+                if (!schedule[showName]) {
+                    schedule[showName] = [];
                 }
+                const dancers = dancersStr.split(',').map(d => d.trim());
+                schedule[showName].push(...dancers);
             });
 
             // Выводим результат
             const resultUl = document.createElement('ul');
-            for (const [dancer, shows] of Object.entries(schedule)) {
+            for (const [showName, dancers] of Object.entries(schedule)) {
                 const li = document.createElement('li');
-                li.textContent = `${dancer}: ${shows.join(', ')}`;
+                li.textContent = `${showName}: ${dancers.join(', ')}`;
                 resultUl.appendChild(li);
             }
             resultDiv.appendChild(resultUl);
