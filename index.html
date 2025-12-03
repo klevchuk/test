@@ -1,70 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Окошко и кнопка</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Расписание шоу</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+        :root{
+            --bg:#f0f8f0;
+            --primary:#388e3c;
+            --accent:#9575cd;
+            --text:#4a148c;
+            --light:#fff;
+            --copy-color: #4caf50;
         }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 16px;
-        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+        html,body{height:100%}
+        body{background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+
+        header{background:var(--primary);color:var(--light);padding:12px 16px;font-size:18px;text-align:center}
+
+        .content{position:relative;overflow:hidden;height:calc(100vh - 48px - 48px)}
+        .content textarea{width:100%;min-height:180px;padding:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
+        .content button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
+        .content button:active{background:#7e57c2}
+
+        .result{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
+        .result ul{list-style:none}
+        .result li{padding:4px 0;border-bottom:1px solid #e0e0e0}
     </style>
 </head>
 <body>
-<input type="text" id="userInput" placeholder="Введите текст здесь">
-<button onclick="handleClick()">Отправить</button>
-<div id="result"></div>
+<header>Расписание шоу</header>
+
+<div class="content">
+    <textarea id="scheduleText" placeholder="Введите расписание здесь..."></textarea>
+    <button onclick="showResult()">Показать результат</button>
+    <button onclick="clearResult()">Стереть результат</button>
+    <div id="result" class="result"></div>
+</div>
 
 <script>
-    function countMatches(str, arr) {
-        let result = ""; // Создать пустую строку для записи результатов
+function showResult() {
+    const scheduleText = document.getElementById('scheduleText').value.trim();
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '';
 
-        if (!str) {
-            return "Вы не ввели текст. Пожалуйста, введите текст для поиска.";
-        }
-
-        for (let i = 0; i < arr.length; i++) {
-            let count = 0;
-            let index = str.indexOf(arr[i]);
-            while (index !== -1) {
-                count++;
-                index = str.indexOf(arr[i], index + 1);
-            }
-            if (count > 0) {
-                result += `"${arr[i]}" matches: ${count} <br>`; // Добавить результат в строку с переносом строки
-            }
-        }
-
-        if (result === "") {
-            result = "Нет совпадений.";
-        }
-
-        console.log(result); // Вывести результат в консоль
-        return result; // Вернуть результат
+    if (!scheduleText) {
+        resultDiv.innerHTML = '<p>Введите расписание!</p>';
+        return;
     }
 
-    function handleClick() {
-        const userInput = document.getElementById('userInput').value;
-        const arr = ["Anya", "Diana", "Alona", "Katya", "Daria", "Dasha", "Masha", "Mery", "Kristina", "Krava", "Milka", "Miya", "Sofiia", "Sapronova", "Bordiian", "Datri", "Tetiana", "Vera", "Avrora", "Vika", "Lera", "Ilya", "Evgeny", "Max", "Yaroslav", "Lemon", "Rustam", "Daniil", "Mikhail", "Sergey", "Klimenko", "Anton", "Mars", "Yulian", "Oleg", "Rostik", "Andrey", "Denis"];
+    const lines = scheduleText.split('\n');
+    const schedule = {};
+    let currentPerson = '';
 
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `Результат: <br> ${countMatches(userInput, arr)}`; // Отобразить результат на экране пользователя
+    lines.forEach(line => {
+        if (line.startsWith('дата:')) {
+            currentPerson = line.split(':')[1].trim();
+            schedule[currentPerson] = [];
+        } else if (line.trim() !== '') {
+            schedule[currentPerson].push(line.trim());
+        }
+    });
+
+    const resultUl = document.createElement('ul');
+    for (const person in schedule) {
+        const personLi = document.createElement('li');
+        personLi.textContent = person;
+        resultUl.appendChild(personLi);
+
+        const showsUl = document.createElement('ul');
+        schedule[person].forEach(show => {
+            const showLi = document.createElement('li');
+            showLi.textContent = show;
+            showsUl.appendChild(showLi);
+        });
+        resultUl.appendChild(showsUl);
     }
+
+    resultDiv.appendChild(resultUl);
+}
+
+function clearResult() {
+    document.getElementById('scheduleText').value = '';
+    document.getElementById('result').innerHTML = '';
+}
 </script>
 </body>
 </html>
