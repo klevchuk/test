@@ -8,15 +8,15 @@
     <link rel="shortcut icon" href="https://klevchuk.github.io/scheduleForDancers/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Расписание шоу</title>
+    <title>калькулятор шоу</title>
     <style>
-        :root{
-            --bg:#f0f8f0;
-            --primary:#388e3c;
-            --accent:#9575cd;
-            --text:#4a148c;
-            --light:#fff;
-            --copy-color: #4caf50;
+        :root {
+            --bg: #e0f7fa; /* светло-голубой фон */
+            --primary: #00796b; /* темно-синий основной цвет */
+            --accent: #ff9800; /* оранжевый акцентный цвет */
+            --text: #37474f; /* темный текст */
+            --light: #fff; /* светлый цвет */
+            --copy-color: #00796b; /* темно-синий для кнопки копирования */
         }
         *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
         html,body{height:100%}
@@ -92,7 +92,7 @@
 </head>
 <body>
 <h3 style="color: red; position: fixed; top: 0; right: 0; margin: 0;">beta</h3>
-<header>Расписание шоу</header>
+<header>Анилиз шоу</header>
 
 <div class="tabs">
     <button class="tab active" id="tab1Btn">Полное расписание</button>
@@ -101,7 +101,7 @@
 
 <div class="content" id="content">
     <div class="tab-content" id="scheduleDisplay">
-        <button id="showListBtn" style="margin-bottom: 10px;">Показать список</button>
+        <button id="showListBtn" style="margin-bottom: 10px;">Список</button>
         <button id="calculateBtn" style="margin-bottom: 10px;">Расчет</button>
         <div id="dateDisplay" class="date-display"></div>
         <div id="scheduleList" class="dancer-list">
@@ -151,7 +151,6 @@ let startX;
 document.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
 });
-
 document.addEventListener('touchend', (e) => {
     const endX = e.changedTouches[0].clientX;
     const deltaX = startX - endX;
@@ -200,6 +199,7 @@ function generateCode() {
     schedule = { [date]: shows }; // Обновляем глобальную переменную schedule
 
     displaySchedule(); // Обновляем первую вкладку с расписанием
+    switchTab(0); // Возвращаемся на первую вкладку
 }
 
 /* ===== 4.  Отображение полного расписания и поиск танцора ===== */
@@ -374,7 +374,7 @@ function calculateDancerShows() {
     });
 
     const dateDisplay = document.getElementById('dateDisplay');
-    dateDisplay.textContent = `Количество шоу для каждого танцора на ${date}`;
+    dateDisplay.textContent = `Кол-во шоу для каждого танцора на ${date}`;
 }
 
 document.getElementById('calculateBtn').onclick = calculateDancerShows;
@@ -384,8 +384,5 @@ window.onload = () => {
     displaySchedule();
 };
 </script>
-
-/*  const  arr = ["Diana", "Alona", "Daria", "Masha", "Mery", "Krava", "Milka", "Miya", "Sofiia", "Datri", "Vera", "Avrora", "Vika", "Lera", "Katya", "Alexandra", "Tanya", "Dasha", "Ilya", "Evgeny", "Max", "Yaroslav", "Lemon", "Mikhail", "Sergey", "Anton", "Yulian", "Oleg", "Rostik", "Andrey", "Denis", "Anatoly", "Alexey", "Dima", "Akmal", "Eduard"]; */
-
 </body>
 </html>
