@@ -1,118 +1,118 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="https://klevchuk.github.io/scheduleForDancers/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://klevchuk.github.io/scheduleForDancers/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://klevchuk.github.io/scheduleForDancers/favicon-16x16.png">
-    <link rel="manifest" href="https://klevchuk.github.io/scheduleForDancers/site.webmanifest">
-    <link rel="shortcut icon" href="https://klevchuk.github.io/scheduleForDancers/favicon.ico" type="image/x-icon">
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>калькулятор шоу</title>
-    <style>
-        :root {
-            --bg: #e0f7fa; /* светло-голубой фон */
-            --primary: #00796b; /* темно-синий основной цвет */
-            --accent: #ff9800; /* оранжевый акцентный цвет */
-            --text: #37474f; /* темный текст */
-            --light: #fff; /* светлый цвет */
-            --copy-color: #00796b; /* темно-синий для кнопки копирования */
-        }
-        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-        html,body{height:100%}
-        body{background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+<link rel="apple-touch-icon" sizes="180x180" href="https://klevchuk.github.io/scheduleForDancers/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://klevchuk.github.io/scheduleForDancers/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://klevchuk.github.io/scheduleForDancers/favicon-16x16.png">
+<link rel="manifest" href="https://klevchuk.github.io/scheduleForDancers/site.webmanifest">
+<link rel="shortcut icon" href="https://klevchuk.github.io/scheduleForDancers/favicon.ico" type="image/x-icon">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>калькулятор шоу</title>
+<style>
+:root {
+--bg: #e0f7fa;
+--primary: #00796b;
+--accent: #ff9800;
+--text: #37474f;
+--light: #fff;
+--copy-color: #00796b;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);display:flex;flex-direction:column}
 
-        header{background:var(--primary);color:var(--light);padding:12px 16px;font-size:18px;text-align:center}
+header{background:var(--primary);color:var(--light);padding:12px 16px;font-size:18px;text-align:center}
 
-        .tabs{display:flex;height:48px}
-        .tab{flex:1;border:none;background:#e8f5f9;color:var(--primary);font-size:14px}
-        .tab.active{background:var(--light);border-bottom:3px solid var(--primary)}
+.tabs{display:flex;height:48px}
+.tab{flex:1;border:none;background:#e8f5f9;color:var(--primary);font-size:14px}
+.tab.active{background:var(--light);border-bottom:3px solid var(--primary)}
 
-        .content{position:relative;overflow:hidden;height:calc(100vh - 48px - 48px)}
-        .tab-content{position:absolute;top:0;left:0;width:100%;height:100%;padding:16px;transition:transform .3s;overflow-y:auto}
-        .tab-content:nth-child(1){transform:translateX(0)}
-        .tab-content:nth-child(2){transform:translateX(100%)}
+.content{position:relative;overflow:hidden;height:calc(100vh - 48px - 48px)}
+.tab-content{position:absolute;top:0;left:0;width:100%;height:100%;padding:16px;transition:transform .3s;overflow-y:auto}
+.tab-content:nth-child(1){transform:translateX(0)}
+.tab-content:nth-child(2){transform:translateX(100%)}
 
-        textarea{width:100%;min-height:180px;padding:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
-        input[type=password],input[type=text]{width:100%;padding:8px;margin-bottom:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
-        button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
-        button:active{background:#7e57c2}
-        button.copy-btn{background:var(--copy-color)}
+textarea{width:100%;min-height:180px;padding:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
+input[type=password],input[type=text]{width:100%;padding:8px;margin-bottom:8px;border:1px solid #c8e6c9;border-radius:5px;font-size:16px}
+button{width:100%;padding:12px;background:var(--accent);color:var(--light);border:none;border-radius:5px;font-size:16px;margin-bottom:8px}
+button:active{background:#7e57c2}
+button.copy-btn{background:var(--copy-color)}
 
-        .date-display{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
-        .dancer-list{background:#f3e5f5;border:1px solid #d1c4e9;border-radius:5px;padding:10px;margin-top:10px}
-        .dancer-list h3{color:#8c2c14;text-align:right;margin-bottom:5px;font-size:16px}
-        .dancer-list ul{list-style:none}
-        .dancer-list li{padding:4px 0;border-bottom:1px solid #e0e0e0}
-        .dancer-list li button {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 6px 12px;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-            margin: 0 5px;
-            text-decoration: none;
-            color: var(--text);
-            transition: background 0.3s, border 0.3s;
-        }
-        .dancer-list li button:hover {
-            background: rgba(255, 255, 255, 1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-        }
-        .dancer-list li button span {
-            font-size: 16px;
-            display: block;
-            text-align: center;
-        }
-        .error,.success{margin-top:8px;font-size:14px}
-        pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
+.date-display{background:var(--bg);color:var(--primary);padding:10px;border-radius:5px;font-weight:700;text-align:center;margin-bottom:10px}
+.dancer-list{background:#f3e5f5;border:1px solid #d1c4e9;border-radius:5px;padding:10px;margin-top:10px}
+.dancer-list h3{color:#8c2c14;text-align:right;margin-bottom:5px;font-size:16px}
+.dancer-list ul{list-style:none}
+.dancer-list li{padding:4px 0;border-bottom:1px solid #e0e0e0}
+.dancer-list li button {
+background: rgba(255, 255, 255, 0.8);
+border: 1px solid rgba(0, 0, 0, 0.1);
+border-radius: 10px;
+padding: 6px 12px;
+font-size: 14px;
+cursor: pointer;
+text-align: center;
+margin: 0 5px;
+text-decoration: none;
+color: var(--text);
+transition: background 0.3s, border 0.3s;
+}
+.dancer-list li button:hover {
+background: rgba(255, 255, 255, 1);
+border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.dancer-list li button span {
+font-size: 16px;
+display: block;
+text-align: center;
+}
+.error,.success{margin-top:8px;font-size:14px}
+pre{background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:8px;white-space:pre-wrap;word-break:break-all;font-size:13px}
 
-        .back-button-container {
-            background: transparent;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .back-button-container button {
-            background: var(--light);
-            color: var(--primary);
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .back-button-container button:hover {
-            background: #e0f2f1;
-        }
-    </style>
+.back-button-container {
+background: transparent;
+padding: 10px;
+text-align: center;
+border-radius: 5px;
+margin-top: 10px;
+}
+.back-button-container button {
+background: var(--light);
+color: var(--primary);
+border: none;
+border-radius: 5px;
+padding: 10px;
+font-size: 16px;
+cursor: pointer;
+}
+.back-button-container button:hover {
+background: #e0f2f1;
+}
+</style>
 </head>
 <body>
 <h3 style="color: red; position: fixed; top: 0; right: 0; margin: 0;">beta</h3>
 <header>Анилиз шоу</header>
 
 <div class="tabs">
-    <button class="tab active" id="tab1Btn">Полное расписание</button>
-    <button class="tab" id="tab2Btn">Редактировать</button>
+<button class="tab active" id="tab1Btn">Полное расписание</button>
+<button class="tab" id="tab2Btn">Редактировать</button>
 </div>
 
 <div class="content" id="content">
-    <div class="tab-content" id="scheduleDisplay">
-        <button id="showListBtn" style="margin-bottom: 10px;">Список</button>
-        <button id="calculateBtn" style="margin-bottom: 10px;">Расчет</button>
-        <div id="dateDisplay" class="date-display"></div>
-        <div id="scheduleList" class="dancer-list">
-            <h3>Расписание на день:</h3>
-            <ul id="scheduleListUl"></ul>
-        </div>
-        <div class="back-button-container" id="backButtonContainer"></div>
-    </div>
+<div class="tab-content" id="scheduleDisplay">
+<button id="showListBtn" style="margin-bottom: 10px;">Список</button>
+<button id="calculateBtn" style="margin-bottom: 10px;">Расчет</button>
+<div id="dateDisplay" class="date-display"></div>
+<div id="scheduleList" class="dancer-list">
+<h3>Расписание на день:</h3>
+<ul id="scheduleListUl"></ul>
+</div>
+<div class="back-button-container" id="backButtonContainer"></div>
+</div>
 
-    <div class="tab-content" id="schedule">
-        <textarea id="scheduleText" placeholder="дата: число и месяц
+<div class="tab-content" id="schedule">
+<textarea id="scheduleText" placeholder="дата: число и месяц
 
 название и инфо о шоу
 состав
@@ -122,267 +122,213 @@
 
 ...
 "></textarea>
-        <button onclick="generateCode()">обработать</button>
-        <div id="saveMsg" style="display:none"></div>
-        <pre id="generatedCode" style="display:none;margin-top:8px"></pre>
-    </div>
+<button onclick="generateCode()">обработать</button>
+<div id="saveMsg" style="display:none"></div>
+<pre id="generatedCode" style="display:none;margin-top:8px"></pre>
+</div>
 </div>
 
 <script>
-let schedule = {}; // Глобальная переменная для хранения расписания
+let schedule = {};
 
-/* ===== 2.  Переключение вкладок ===== */
 const content = document.getElementById('content');
 const tab1Btn = document.getElementById('tab1Btn');
 const tab2Btn = document.getElementById('tab2Btn');
 const pages = content.children;
 
 function switchTab(n) {
-    [tab1Btn, tab2Btn].forEach((btn, i) => btn.classList.toggle('active', i === n));
-    pages[0].style.transform = n === 0 ? 'translateX(0)' : 'translateX(-100%)';
-    pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
+[tab1Btn, tab2Btn].forEach((btn, i) => btn.classList.toggle('active', i === n));
+pages[0].style.transform = n === 0 ? 'translateX(0)' : 'translateX(-100%)';
+pages[1].style.transform = n === 1 ? 'translateX(0)' : 'translateX(100%)';
 }
 tab1Btn.onclick = () => switchTab(0);
 tab2Btn.onclick = () => switchTab(1);
 
-// Добавляем обработчик для смахивания
 let startX;
-
-document.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-});
+document.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; });
 document.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const deltaX = startX - endX;
-
-    if (Math.abs(deltaX) > 50) {
-        if (deltaX > 0) {
-            // Смахивание влево
-            switchTab(1);
-        } else {
-            // Смахивание вправо
-            switchTab(0);
-        }
-    }
+const endX = e.changedTouches[0].clientX;
+const deltaX = startX - endX;
+if (Math.abs(deltaX) > 50) {
+deltaX > 0 ? switchTab(1) : switchTab(0);
+}
 });
 
-/* ===== 3.  Генерация кода ===== */
 function generateCode() {
-    const raw = document.getElementById('scheduleText').value.trim();
-    if (!raw) {
-        alert('Пустое расписание');
-        return;
-    }
+const raw = document.getElementById('scheduleText').value.trim();
+if (!raw) { alert('Пустое расписание'); return; }
 
-    const lines = raw.split(/\r?\n/);
-    let date = '', i = 0;
-    if (lines.length) date = lines[i++].trim();
+const lines = raw.split(/\r?\n/);
+let date = '', i = 0;
+if (lines.length) date = lines[i++].trim();
 
-    const shows = {};
-    while (i < lines.length) {
-        while (i < lines.length && lines[i].trim() === '') i++;
-        if (i >= lines.length) break;
-
-        const showName = lines[i++].trim();
-        if (!showName) continue;
-
-        const dancers = [];
-        while (i < lines.length && lines[i].trim() !== '') {
-            lines[i].split(',').forEach(p => {
-                const d = p.trim();
-                if (d) dancers.push(d);
-            });
-            i++;
-        }
-        shows[showName] = dancers;
-    }
-    schedule = { [date]: shows }; // Обновляем глобальную переменную schedule
-
-    displaySchedule(); // Обновляем первую вкладку с расписанием
-    switchTab(0); // Возвращаемся на первую вкладку
+const shows = {};
+while (i < lines.length) {
+while (i < lines.length && lines[i].trim() === '') i++;
+if (i >= lines.length) break;
+const showName = lines[i++].trim();
+if (!showName) continue;
+const dancers = [];
+while (i < lines.length && lines[i].trim() !== '') {
+lines[i].split(',').forEach(p => { const d = p.trim(); if (d) dancers.push(d); });
+i++;
+}
+shows[showName] = dancers;
+}
+schedule = { [date]: shows };
+displaySchedule();
+switchTab(0);
 }
 
-/* ===== 4.  Отображение полного расписания и поиск танцора ===== */
 function displaySchedule() {
-    const dateDisplay = document.getElementById('dateDisplay');
-    const scheduleListUl = document.getElementById('scheduleListUl');
-    const backButtonContainer = document.getElementById('backButtonContainer');
+const dateDisplay = document.getElementById('dateDisplay');
+const scheduleListUl = document.getElementById('scheduleListUl');
+const backButtonContainer = document.getElementById('backButtonContainer');
 
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
+const date = Object.keys(schedule)[0];
+const shows = schedule[date];
 
-    dateDisplay.textContent = date; // Возвращаем только дату без имени
-    scheduleListUl.innerHTML = '';
+dateDisplay.textContent = date;
+scheduleListUl.innerHTML = '';
 
-    if (Object.keys(shows).length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'Расписание пусто';
-        scheduleListUl.appendChild(li);
-        return;
-    }
+if (Object.keys(shows).length === 0) {
+const li = document.createElement('li');
+li.textContent = 'Расписание пусто';
+scheduleListUl.appendChild(li);
+return;
+}
 
-    Object.keys(shows).forEach(showName => {
-        const li = document.createElement('li');
-        li.textContent = showName;
+Object.keys(shows).forEach(showName => {
+const li = document.createElement('li');
+li.textContent = showName;
 
-        const ul = document.createElement('ul');
-        ul.style.display = 'flex';
-        ul.style.flexWrap = 'wrap';
-        ul.style.gap = '5px';
-        ul.style.marginTop = '5px';
-        ul.style.marginBottom = '5px';
+const ul = document.createElement('ul');
+ul.style.display = 'flex';
+ul.style.flexWrap = 'wrap';
+ul.style.gap = '5px';
+ul.style.marginTop = '5px';
+ul.style.marginBottom = '5px';
 
-        const showNameDiv = document.createElement('div');
-        showNameDiv.textContent = showName;
-        showNameDiv.style.fontWeight = 'bold';
-        showNameDiv.style.fontSize = '14px';
-        showNameDiv.style.marginBottom = '5px';
+const showNameDiv = document.createElement('div');
+showNameDiv.textContent = showName;
+showNameDiv.style.fontWeight = 'bold';
+showNameDiv.style.fontSize = '14px';
+showNameDiv.style.marginBottom = '5px';
 
-        shows[showName].forEach(dancer => {
-            const dancerLi = document.createElement('li');
+shows[showName].forEach(dancer => {
+const dancerLi = document.createElement('li');
+const dancerButton = document.createElement('button');
+dancerButton.innerHTML = `<span>${dancer}</span>`;
+dancerButton.onclick = function(e) { findDancer(dancer); };
+dancerLi.appendChild(dancerButton);
+ul.appendChild(dancerLi);
+});
 
-            const dancerButton = document.createElement('button');
-            dancerButton.innerHTML = `<span>${dancer}</span>`;
-            dancerButton.onclick = function(e) {
-                findDancer(dancer);
-            };
-            dancerLi.appendChild(dancerButton);
+const showContainer = document.createElement('div');
+showContainer.appendChild(showNameDiv);
+showContainer.appendChild(ul);
+showContainer.style.border = '1px solid #d1c4e9';
+showContainer.style.borderRadius = '5px';
+showContainer.style.padding = '5px';
+showContainer.style.marginBottom = '10px';
 
-            ul.appendChild(dancerLi);
-        });
+scheduleListUl.appendChild(showContainer);
+});
 
-        const showContainer = document.createElement('div');
-        showContainer.appendChild(showNameDiv);
-        showContainer.appendChild(ul);
-        showContainer.style.border = '1px solid #d1c4e9';
-        showContainer.style.borderRadius = '5px';
-        showContainer.style.padding = '5px';
-        showContainer.style.marginBottom = '10px';
-
-        scheduleListUl.appendChild(showContainer);
-    });
-
-    // Очистить контейнер кнопки "начальная страница"
-    backButtonContainer.innerHTML = '';
-
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
+backButtonContainer.innerHTML = '';
+const backButton = document.createElement('button');
+backButton.textContent = 'начальная страница';
+backButton.onclick = () => { displaySchedule(); };
+backButtonContainer.appendChild(backButton);
 }
 
 function findDancer(name) {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-
-    const result = Object.keys(shows).filter(showName =>
-        shows[showName].includes(name)
-    );
-
-    const ul = document.getElementById('scheduleListUl');
-    ul.innerHTML = '';
-    if (result.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'Не найдено';
-        ul.appendChild(li);
-    } else {
-        result.forEach(showName => {
-            const li = document.createElement('li');
-            li.textContent = showName;
-            ul.appendChild(li);
-        });
-    }
-
-    // Обновляем заголовок даты с именем человека
-    const dateDisplay = document.getElementById('dateDisplay');
-    dateDisplay.textContent = `${date} (${name})`;
-
-    // Очистить контейнер кнопки "начальная страница"
-    const backButtonContainer = document.getElementById('backButtonContainer');
-    backButtonContainer.innerHTML = '';
-
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
+const date = Object.keys(schedule)[0];
+const shows = schedule[date];
+const result = Object.keys(shows).filter(showName => shows[showName].includes(name));
+const ul = document.getElementById('scheduleListUl');
+ul.innerHTML = '';
+if (result.length === 0) {
+const li = document.createElement('li');
+li.textContent = 'Не найдено';
+ul.appendChild(li);
+} else {
+result.forEach(showName => {
+const li = document.createElement('li');
+li.textContent = showName;
+ul.appendChild(li);
+});
+}
+const dateDisplay = document.getElementById('dateDisplay');
+dateDisplay.textContent = `${date} (${name})`;
+const backButtonContainer = document.getElementById('backButtonContainer');
+backButtonContainer.innerHTML = '';
+const backButton = document.createElement('button');
+backButton.textContent = 'начальная страница';
+backButton.onclick = () => { displaySchedule(); };
+backButtonContainer.appendChild(backButton);
 }
 
-/* ===== 5.  Показать список артистов и их шоу ===== */
+/* ===== 5. Показать список артистов и их шоу (имена крупнее) ===== */
 function showDancerList() {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
+const date = Object.keys(schedule)[0];
+const shows = schedule[date];
+const ul = document.getElementById('scheduleListUl');
+ul.innerHTML = '';
 
-    const ul = document.getElementById('scheduleListUl');
-    ul.innerHTML = '';
+const allDancers = new Set();
+Object.values(shows).forEach(dancers => { dancers.forEach(dancer => allDancers.add(dancer)); });
 
-    const allDancers = new Set();
-    Object.values(shows).forEach(dancers => {
-        dancers.forEach(dancer => allDancers.add(dancer));
-    });
+allDancers.forEach(dancer => {
+const li = document.createElement('li');
 
-    allDancers.forEach(dancer => {
-        const li = document.createElement('li');
-        li.textContent = dancer;
+/* имя танцора – жирное и крупное */
+const nameSpan = document.createElement('span');
+nameSpan.textContent = dancer;
+nameSpan.style.fontWeight = 'bold';
+nameSpan.style.fontSize = '1.4em';
+nameSpan.style.display = 'block';
+li.appendChild(nameSpan);
 
-        const dancerShows = Object.keys(shows).filter(showName => shows[showName].includes(dancer));
-        const showsUl = document.createElement('ul');
-        dancerShows.forEach(showName => {
-            const showLi = document.createElement('li');
-            showLi.textContent = showName;
-            showsUl.appendChild(showLi);
-        });
+const dancerShows = Object.keys(shows).filter(showName => shows[showName].includes(dancer));
+const showsUl = document.createElement('ul');
+dancerShows.forEach(showName => {
+const showLi = document.createElement('li');
+showLi.textContent = showName;
+showsUl.appendChild(showLi);
+});
+li.appendChild(showsUl);
+ul.appendChild(li);
+});
 
-        li.appendChild(showsUl);
-        ul.appendChild(li);
-    });
-
-    const dateDisplay = document.getElementById('dateDisplay');
-    dateDisplay.textContent = `Список артистов на ${date}`;
+const dateDisplay = document.getElementById('dateDisplay');
+dateDisplay.textContent = `Список артистов на ${date}`;
 }
 
 document.getElementById('showListBtn').onclick = showDancerList;
 
-/* ===== 6.  Расчет количества шоу для каждого танцора ===== */
 function calculateDancerShows() {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-
-    const ul = document.getElementById('scheduleListUl');
-    ul.innerHTML = '';
-
-    const allDancers = new Map();
-    Object.values(shows).forEach(dancers => {
-        dancers.forEach(dancer => {
-            if (allDancers.has(dancer)) {
-                allDancers.set(dancer, allDancers.get(dancer) + 1);
-            } else {
-                allDancers.set(dancer, 1);
-            }
-        });
-    });
-
-    allDancers.forEach((count, dancer) => {
-        const li = document.createElement('li');
-        li.textContent = `${dancer}: ${count} шоу`;
-        ul.appendChild(li);
-    });
-
-    const dateDisplay = document.getElementById('dateDisplay');
-    dateDisplay.textContent = `Кол-во шоу для каждого танцора на ${date}`;
+const date = Object.keys(schedule)[0];
+const shows = schedule[date];
+const ul = document.getElementById('scheduleListUl');
+ul.innerHTML = '';
+const allDancers = new Map();
+Object.values(shows).forEach(dancers => {
+dancers.forEach(dancer => {
+allDancers.set(dancer, (allDancers.get(dancer) || 0) + 1);
+});
+});
+allDancers.forEach((count, dancer) => {
+const li = document.createElement('li');
+li.textContent = `${dancer}: ${count} шоу`;
+ul.appendChild(li);
+});
+const dateDisplay = document.getElementById('dateDisplay');
+dateDisplay.textContent = `Кол-во шоу для каждого танцора на ${date}`;
 }
-
 document.getElementById('calculateBtn').onclick = calculateDancerShows;
 
-/* ===== 7.  Инициализация ===== */
-window.onload = () => {
-    displaySchedule();
-};
+window.onload = () => { displaySchedule(); };
 </script>
 </body>
 </html>
