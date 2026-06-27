@@ -140,8 +140,8 @@
         <div class="date-row">
             <div id="dateDisplay" class="date-display"></div>
             <div class="buttons-right">
-                <button class="shows-btn" onclick="showShowsOnly()">шоу</button>
                 <button class="home-btn" onclick="displaySchedule()" title="Начальная страница">🏠</button>
+                <button class="shows-btn" onclick="showShowsOnly()">шоу</button>
             </div>
         </div>
         <div id="scheduleList" class="dancer-list">
@@ -174,124 +174,121 @@
 /* ===== 1.  Встроенное расписание ===== */
 
 const schedule = {
-    "23 июня": {
+    "28 июня": {
         "Day off": [
-            "Yaroslav",
-            "Miya"
-        ],
-        "❗️9:00 репетиция в цирковом для всех с парадайс": [],
-        "❗️11:25 Fitness (come at 11:20)": [
-            "Milka",
-            "Datri",
-            "Alina",
-            "Olha",
-            "Marina",
-            "Anya"
-        ],
-        "❗️11:30 съемка (11:15 готовы в костюмах за центральной)": [
-            "Denis",
-            "Oleg",
-            "Bogdan",
-            "Alexandra",
-            "Mery",
-            "Di"
-        ],
-        "❗️12:25 Fitness (come at 12:20)": [
-            "Avrora",
-            "Masha",
-            "Katya",
-            "Anya",
-            "Baluta",
-            "Alina"
-        ],
-        "❗️13:00 You can do it (come at 12:30)": [
+            "Yulian",
             "Alexey",
-            "Yulian",
-            "Dima",
-            "Lemon",
-            "Baluta",
-            "Milka",
-            "Avrora",
-            "Lada"
-        ],
-        "❗️14:00 Swing (come at 13:55)": [
-            "Ilya",
-            "Yulian",
             "Krava",
-            "Katya",
-            "Marina"
-        ],
-        "❗️ 14:05 мини парад (come at 14:00)": [
             "Alexandra"
         ],
-        "❗️14:10 Fitness (come at 14:05)": [
-            "Baluta",
-            "Masha",
+        "❗️9:00 репетиция в цирковом для девушек парадайс": [],
+        "❗️10:00 репетиция для все парадайс": [],
+        "❗️11:00 Chimelong hotel Машинка в 10:30 с циркового ❗️обувь взять с собой": [
+            "Denis",
+            "Vlad",
             "Milka",
-            "Avrora",
-            "Diana",
+            "Katya",
+            "Anya"
+        ],
+        "❗️12:25 Fitness (come at 12:20)": [
+            "Baluta",
+            "Datri",
+            "Katya",
+            "Alina",
+            "Anya",
             "Lada"
         ],
-        "❗️15:00 Parade ( come at 14:30❗️) 14:45 собрание ⚠️ 🐉 Dragon": [
+        "❗️13:00 You can do it (come at 12:30)": [
             "Lemon",
+            "Dima",
+            "Max",
+            "Yaroslav",
+            "Milka",
+            "Miya",
+            "Marina",
+            "Lada",
+            "Di",
+            "Masha"
+        ],
+        "❗️14:00 Swing (come at 13:55)": [
+            "Yaroslav",
             "Ilya",
-            "Alexey",
-            "Denis",
+            "Diana",
+            "Olha",
+            "Milka"
+        ],
+        "❗️ 14:05 мини парад (come at 14:00)": [
+            "Vera"
+        ],
+        "❗️14:10 Fitness (come at 14:05)": [
             "Masha",
+            "Avrora",
             "Datri",
+            "Katya",
+            "Marina",
+            "Di"
+        ],
+        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 🐉 Dragon": [
+            "Lemon",
+            "Max",
+            "Ilya",
+            "Denis",
+            "Avrora",
+            "Katya",
             "Olha",
             "Alina"
         ],
-        "❗️15:00 Parade ( come at 14:30❗️) 14:45 собрание ⚠️ 💃Girls": [
+        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 💃Girls": [
             "Baluta",
-            "Mery",
-            "Milka",
-            "Krava",
-            "Anya"
-        ],
-        "❗️15:00 Parade ( come at 14:30❗️) 14:45 собрание ⚠️ 🌼 Цветы": [
             "Diana",
-            "Di"
+            "Milka",
+            "Anya",
+            "Lada"
         ],
-        "❗️15:00 Parade ( come at 14:30❗️) 14:45 собрание ⚠️ 🦂 Scorpion": [
-            "Vera"
-        ],
-        "❗️После парада мерять костюмы": [
-            "Denis",
-            "Alina"
-        ],
-        "❗️16:00 Swing (come at 15:55)": [
-            "Yulian",
-            "Alexey",
-            "Alexandra",
-            "Mery",
-            "Di"
-        ],
-        "❗️ 16:25 мини парад (come at 16:20)": [
-            "Vera"
-        ],
-        "❗️16:40 Tusa (come at 16:35)": [
-            "Alina"
-        ],
-        "❗️16:55 Fitness (come at 16:50)": [
+        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 🌼 Цветы": [
             "Masha",
-            "Mery",
-            "Datri",
-            "Marina",
-            "Lada",
-            "Olha"
+            "Mery"
         ],
-        "❗️17:20 Party (come at 17:00)": [
+        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 🦂 Scorpion": [
+            "Vera"
+        ],
+        "❗️16:00 You can do it (come at 15:45)": [
+            "Yaroslav",
             "Ilya",
-            "Alexey",
             "Dima",
             "Denis",
-            "Lemon",
-            "Krava",
-            "Avrora",
-            "Katya",
+            "Alina",
+            "Baluta",
+            "Datri",
+            "Marina",
             "Diana",
-            "Di"
+            "Olha"
+        ],
+        "❗️ 16:15 мини парад (come at 16:10)": [
+            "Mery"
+        ],
+        "❗️16:40 Tusa (come at 16:35)": [
+            "Miya"
+        ],
+        "❗️16:55 Fitness (come at 16:50)": [
+            "Baluta",
+            "Datri",
+            "Marina",
+            "Di",
+            "Lada",
+            "Masha"
+        ],
+        "❗️17:20 Party (come at 17:00)": [
+            "Lemon",
+            "Dima",
+            "Denis",
+            "Ilya",
+            "Max",
+            "Mery",
+            "Miya",
+            "Avrora",
+            "Diana",
+            "Olha"
         ]
     }
 };
@@ -489,13 +486,30 @@ function displaySchedule() {
     backButtonContainer.appendChild(backButton);
 }
 
+/* ===== ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: получить всех уникальных танцоров ===== */
+function getAllDancers() {
+    const date = Object.keys(schedule)[0];
+    const shows = schedule[date];
+    const dancersSet = new Set();
+
+    Object.values(shows).forEach(dancers => {
+        dancers.forEach(dancer => dancersSet.add(dancer));
+    });
+
+    return Array.from(dancersSet).sort();
+}
+
+/* ===== ИСПРАВЛЕННАЯ ФУНКЦИЯ: поиск персонального расписания танцора ===== */
 function findDancer(name) {
     const date = Object.keys(schedule)[0];
     const shows = schedule[date];
 
-    const result = Object.keys(shows).filter(showName =>
-        shows[showName].includes(name)
-    );
+    const result = Object.keys(shows).filter(showName => {
+        const dancers = shows[showName];
+        // Если в шоу нет участников — оно общее для всех
+        // Если есть участники — проверяем, есть ли там искомый танцор
+        return dancers.length === 0 || dancers.includes(name);
+    });
 
     const ul = document.getElementById('scheduleListUl');
     ul.innerHTML = '';
@@ -507,6 +521,9 @@ function findDancer(name) {
         result.forEach(showName => {
             const li = document.createElement('li');
             li.textContent = showName;
+            li.style.padding = '8px 0';
+            li.style.borderBottom = '1px solid #e0e0e0';
+            li.style.fontSize = '15px';
             ul.appendChild(li);
         });
     }
