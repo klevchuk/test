@@ -1,130 +1,128 @@
 const schedule = {
-    "18 июля": {
+    "19 июля": {
         "Day off": [
-            "Denis",
-            "Anya",
-            "Lada"
+            "Krava",
+            "Yulian",
+            "Alexandra",
+            "Alexey"
         ],
         "❗️11:00 Chimelong hotel Машинка в 10:30 с общаги  ❗️обувь взять с собой": [
-            "Ilya",
-            "Vlad",
-            "Datri",
-            "Olha",
-            "Milka"
+            "Lemon",
+            "Dima",
+            "Masha",
+            "Mery",
+            "Diana"
         ],
         "❗️12:40 Samba (come at 12:35)": [
-            "Avrora",
-            "Vika",
-            "Alina"
+            "Milka",
+            "Miya",
+            "Lada"
         ],
         "❗️13:00 You can do it (come at 12:30)": [
-            "Yaroslav",
-            "Yulian",
+            "Ilya",
             "Dima",
+            "Denis",
             "Max",
-            "Baluta",
-            "Olga",
-            "Milka",
+            "Marina",
+            "Olha",
+            "Alina",
             "Di"
         ],
         "❗️14:00 Cheerleading (детская, come at 13:55)": [
-            "Mery",
-            "Milka",
-            "Diana",
-            "Marina",
-            "Olha"
+            "Baluta",
+            "Masha",
+            "Avrora",
+            "Datri",
+            "Katya"
         ],
         "❗️14:10 Samba (come at 14:05)": [
-            "Avrora",
-            "Vika",
-            "Alina"
+            "Milka",
+            "Miya",
+            "Lada"
         ],
         "❗️ 14:20 мини парад (come at 14:15)": [
-            "Alexandra"
+            "Mery"
         ],
         "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 🍉Арбуз": [
-            "Yulian",
+            "Max",
             "Yaroslav",
             "Ilya",
-            "Mery",
-            "Datri",
-            "Diana"
+            "Masha",
+            "Katya",
+            "Anya"
         ],
-        "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️  🎊Samba": [
+        "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 🎊Samba": [
             "Lemon",
             "Dima",
-            "Alexey",
+            "Denis",
+            "Milka",
+            "Miya",
+            "Lada"
+        ],
+        "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 💃нпс": [
+            "Baluta",
             "Avrora",
             "Vika",
             "Alina"
         ],
-        "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 💃нпс": [
-            "Miya",
-            "Alexandra",
-            "Katya",
+        "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 🦏Носорог": [
+            "Diana",
             "Di"
         ],
-        "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 🦏Носорог": [
-            "Baluta",
-            "Marina"
-        ],
         "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 🦬Бык": [
-            "Olha"
+            "Mery"
         ],
         "❗️15:30 Parade (come at 15:00) 15:15 собрание ⚠️ 🦂Scorpion": [
             "Vera"
         ],
         "❗️16:45 Cheerleading (детская, come at 16:40)": [
             "Datri",
-            "Mery",
-            "Miya",
+            "Masha",
+            "Avrora",
             "Marina",
-            "Di"
+            "Olha"
         ],
         "❗️ 17:00 мини парад (come at 16:55)": [
             "Vera"
         ],
         "❗️17:00 You can do it (come at 16:45)": [
             "Yaroslav",
-            "Alexey",
-            "Lemon",
+            "Ilya",
+            "Denis",
             "Max",
-            "Baluta",
-            "Milka",
-            "Alexandra",
-            "Katya"
+            "Vika",
+            "Diana",
+            "Alina",
+            "Anya"
         ],
         "❗️17:40 Tusa  (come at 17:35)": [
-            "Olha"
+            "Avrora"
         ],
         "❗️18:20 Cheerleading (детская, come at 18:10)": [
             "Baluta",
             "Katya",
-            "Miya",
-            "Datri",
+            "Marina",
+            "Olha",
             "Di"
         ],
         "❗️18:55 Samba (come at 18:50)": [
-            "Avrora",
-            "Vika",
-            "Alina"
+            "Milka",
+            "Miya",
+            "Lada"
         ],
         "❗️19:15 Party (come at 18:45)": [
             "Lemon",
             "Ilya",
-            "Yulian",
-            "Alexey",
+            "Yaroslav",
+            "Denis",
             "Max",
             "Dima",
-            "Mery",
-            "Miya",
-            "Alexandra",
-            "Katya",
-            "Marina",
-            "Diana"
-        ],
-        "❗️20:00 репетиция в цирковом": [
-            "Di", "Alexandra" ,"Alina", "Yulian", "Denis", "Alexey"
+            "Datri",
+            "Vika",
+            "Olha",
+            "Alina",
+            "Di",
+            "Anya"
         ]
     }
 };
