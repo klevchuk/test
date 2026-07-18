@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="https://klevchuk.github.io/scheduleForDancers/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://klevchuk.github.io/scheduleForDancers/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://klevchuk.github.io/scheduleForDancers/favicon-16x16.png">
-    <link rel="manifest" href="https://klevchuk.github.io/scheduleForDancers/site.webmanifest">
-    <link rel="shortcut icon" href="https://klevchuk.github.io/scheduleForDancers/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>Расписание шоу</title>
@@ -89,7 +89,6 @@
             background: #e0f2f1;
         }
 
-        /* Стиль для строки с датой и кнопками */
         .date-row {
             display: flex;
             align-items: center;
@@ -98,9 +97,9 @@
             margin-bottom: 10px;
         }
         .date-row .date-display {
-            flex: 0 0 auto; /* дата не растягивается */
+            flex: 0 0 auto;
             margin-bottom: 0;
-            text-align: left; /* текст даты слева */
+            text-align: left;
             padding-left: 0;
         }
         .date-row .buttons-right {
@@ -170,130 +169,9 @@
     </div>
 </div>
 
+<script src="schedule.js"></script>
 <script>
-/* ===== 1.  Встроенное расписание ===== */
-
-const schedule = {
-    "28 июня": {
-        "Day off": [
-            "Yulian",
-            "Alexey",
-            "Krava",
-            "Alexandra"
-        ],
-        "❗️9:00 репетиция в цирковом для девушек парадайс": [],
-        "❗️10:00 репетиция для все парадайс": [],
-        "❗️11:00 Chimelong hotel Машинка в 10:30 с циркового ❗️обувь взять с собой": [
-            "Denis",
-            "Vlad",
-            "Milka",
-            "Katya",
-            "Anya"
-        ],
-        "❗️12:25 Fitness (come at 12:20)": [
-            "Baluta",
-            "Datri",
-            "Katya",
-            "Alina",
-            "Anya",
-            "Lada"
-        ],
-        "❗️13:00 You can do it (come at 12:30)": [
-            "Lemon",
-            "Dima",
-            "Max",
-            "Yaroslav",
-            "Milka",
-            "Miya",
-            "Marina",
-            "Lada",
-            "Di",
-            "Masha"
-        ],
-        "❗️14:00 Swing (come at 13:55)": [
-            "Yaroslav",
-            "Ilya",
-            "Diana",
-            "Olha",
-            "Milka"
-        ],
-        "❗️ 14:05 мини парад (come at 14:00)": [
-            "Vera"
-        ],
-        "❗️14:10 Fitness (come at 14:05)": [
-            "Masha",
-            "Avrora",
-            "Datri",
-            "Katya",
-            "Marina",
-            "Di"
-        ],
-        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 🐉 Dragon": [
-            "Lemon",
-            "Max",
-            "Ilya",
-            "Denis",
-            "Avrora",
-            "Katya",
-            "Olha",
-            "Alina"
-        ],
-        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 💃Girls": [
-            "Baluta",
-            "Diana",
-            "Milka",
-            "Anya",
-            "Lada"
-        ],
-        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 🌼 Цветы": [
-            "Masha",
-            "Mery"
-        ],
-        "❗️15:00 Parade ( come at 14:30) 14:45 собрание ⚠️ 🦂 Scorpion": [
-            "Vera"
-        ],
-        "❗️16:00 You can do it (come at 15:45)": [
-            "Yaroslav",
-            "Ilya",
-            "Dima",
-            "Denis",
-            "Alina",
-            "Baluta",
-            "Datri",
-            "Marina",
-            "Diana",
-            "Olha"
-        ],
-        "❗️ 16:15 мини парад (come at 16:10)": [
-            "Mery"
-        ],
-        "❗️16:40 Tusa (come at 16:35)": [
-            "Miya"
-        ],
-        "❗️16:55 Fitness (come at 16:50)": [
-            "Baluta",
-            "Datri",
-            "Marina",
-            "Di",
-            "Lada",
-            "Masha"
-        ],
-        "❗️17:20 Party (come at 17:00)": [
-            "Lemon",
-            "Dima",
-            "Denis",
-            "Ilya",
-            "Max",
-            "Mery",
-            "Miya",
-            "Avrora",
-            "Diana",
-            "Olha"
-        ]
-    }
-};
-
-/* ===== 2.  Переключение вкладок ===== */
+/* ===== 1.  Переключение вкладок ===== */
 const content = document.getElementById('content');
 const tab1Btn = document.getElementById('tab1Btn');
 const tab2Btn = document.getElementById('tab2Btn');
@@ -307,9 +185,7 @@ function switchTab(n) {
 tab1Btn.onclick = () => switchTab(0);
 tab2Btn.onclick = () => switchTab(1);
 
-// Добавляем обработчик для смахивания
 let startX;
-
 document.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
 });
@@ -320,16 +196,14 @@ document.addEventListener('touchend', (e) => {
 
     if (Math.abs(deltaX) > 50) {
         if (deltaX > 0) {
-            // Смахивание влево
             switchTab(1);
         } else {
-            // Смахивание вправо
             switchTab(0);
         }
     }
 });
 
-/* ===== 3.  Генерация кода ===== */
+/* ===== 2.  Генерация кода ===== */
 function generateCode() {
     const pwd = document.getElementById('password').value.trim();
     const msg = document.getElementById('saveMsg');
@@ -414,7 +288,7 @@ function copyToClipboard() {
         });
 }
 
-/* ===== 4.  Отображение полного расписания и поиск танцора ===== */
+/* ===== 3.  Отображение полного расписания и поиск танцора ===== */
 function displaySchedule() {
     const dateDisplay = document.getElementById('dateDisplay');
     const scheduleListUl = document.getElementById('scheduleListUl');
@@ -423,7 +297,7 @@ function displaySchedule() {
     const date = Object.keys(schedule)[0];
     const shows = schedule[date];
 
-    dateDisplay.textContent = date; // Возвращаем только дату без имени
+    dateDisplay.textContent = date;
     scheduleListUl.innerHTML = '';
 
     if (Object.keys(shows).length === 0) {
@@ -434,9 +308,6 @@ function displaySchedule() {
     }
 
     Object.keys(shows).forEach(showName => {
-        const li = document.createElement('li');
-        li.textContent = showName;
-
         const ul = document.createElement('ul');
         ul.style.display = 'flex';
         ul.style.flexWrap = 'wrap';
@@ -474,118 +345,11 @@ function displaySchedule() {
         scheduleListUl.appendChild(showContainer);
     });
 
-    // Очистить контейнер кнопки "начальная страница"
     backButtonContainer.innerHTML = '';
 
-    // Добавляем кнопку "начальная страница" в контейнер
     const backButton = document.createElement('button');
     backButton.textContent = 'начальная страница';
     backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
+        displaySchedule();
     };
-    backButtonContainer.appendChild(backButton);
-}
-
-/* ===== ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: получить всех уникальных танцоров ===== */
-function getAllDancers() {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-    const dancersSet = new Set();
-
-    Object.values(shows).forEach(dancers => {
-        dancers.forEach(dancer => dancersSet.add(dancer));
-    });
-
-    return Array.from(dancersSet).sort();
-}
-
-/* ===== ИСПРАВЛЕННАЯ ФУНКЦИЯ: поиск персонального расписания танцора ===== */
-function findDancer(name) {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-
-    const result = Object.keys(shows).filter(showName => {
-        const dancers = shows[showName];
-        // Если в шоу нет участников — оно общее для всех
-        // Если есть участники — проверяем, есть ли там искомый танцор
-        return dancers.length === 0 || dancers.includes(name);
-    });
-
-    const ul = document.getElementById('scheduleListUl');
-    ul.innerHTML = '';
-    if (result.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'Не найдено';
-        ul.appendChild(li);
-    } else {
-        result.forEach(showName => {
-            const li = document.createElement('li');
-            li.textContent = showName;
-            li.style.padding = '8px 0';
-            li.style.borderBottom = '1px solid #e0e0e0';
-            li.style.fontSize = '15px';
-            ul.appendChild(li);
-        });
-    }
-
-    // Обновляем заголовок даты с именем человека
-    const dateDisplay = document.getElementById('dateDisplay');
-    dateDisplay.textContent = `${date} (${name})`;
-
-    // Очистить контейнер кнопки "начальная страница"
-    const backButtonContainer = document.getElementById('backButtonContainer');
-    backButtonContainer.innerHTML = '';
-
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
-}
-
-/* ===== 5.  Показать только список шоу ===== */
-function showShowsOnly() {
-    const date = Object.keys(schedule)[0];
-    const shows = schedule[date];
-    const scheduleListUl = document.getElementById('scheduleListUl');
-    const backButtonContainer = document.getElementById('backButtonContainer');
-
-    scheduleListUl.innerHTML = '';
-
-    if (Object.keys(shows).length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'Расписание пусто';
-        scheduleListUl.appendChild(li);
-        return;
-    }
-
-    Object.keys(shows).forEach(showName => {
-        const li = document.createElement('li');
-        li.textContent = showName;
-        li.style.padding = '8px 0';
-        li.style.borderBottom = '1px solid #e0e0e0';
-        li.style.fontSize = '15px';
-        scheduleListUl.appendChild(li);
-    });
-
-    // Очистить контейнер кнопки "начальная страница"
-    backButtonContainer.innerHTML = '';
-
-    // Добавляем кнопку "начальная страница" в контейнер
-    const backButton = document.createElement('button');
-    backButton.textContent = 'начальная страница';
-    backButton.onclick = () => {
-        displaySchedule(); // Вернуться к общему расписанию
-    };
-    backButtonContainer.appendChild(backButton);
-}
-
-/* ===== 6.  Инициализация ===== */
-window.onload = () => {
-    displaySchedule();
-};
-</script>
-</body>
-</html>
+    backButtonContainer.appendChild
