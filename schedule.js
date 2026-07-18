@@ -1,5 +1,5 @@
 const schedule = {
-    "19 июля": {
+    "19 июл я": {
         "Day off": [
             "Krava",
             "Yulian",
